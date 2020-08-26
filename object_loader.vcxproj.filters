@@ -39,6 +39,12 @@
     <ClCompile Include="Object3D.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJObject.cpp">
+      <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
     <ClInclude Include="BoundingBox3D.h">
+      <Filter>Header Files\Drawable Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJObject.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
   </ItemGroup>

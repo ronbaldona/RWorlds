@@ -1,5 +1,5 @@
 /*
-    Base class for all drawable objects
+    Base class for all drawable objects. Serves as the interface for rendering any object
 	
 	- RAB
  */
@@ -14,8 +14,16 @@
 #include <vector>
 
 class Object {
+protected:
 	// Places object in world space
 	glm::mat4 model;
+
+	/// <summary>
+	/// Loads object from given file
+	/// </summary>
+	/// <param name="path"> File path name of object </param>
+	/// <returns> True if successful, Otherwise false</returns>
+	virtual bool load(const char* path) = 0;
 
 public:
 
@@ -26,4 +34,6 @@ public:
 	/// <param name="view"> inverse camera transformation matrix </param>
 	/// <param name="projection"> projection transformation matrix </param>
 	virtual void draw(GLuint shaderProg, glm::mat4 view, glm::mat4 projection) = 0;
+
+	// ADD UPDATE FUNCTIONS HERE AS NEEDED
 };

@@ -44,7 +44,17 @@ public:
 	/// <returns> GLFWwindow ptr </returns>
 	GLFWwindow* getWindowptr() const;
 
-	// ADD CALLBACKS HERE
+
+	/// <summary>
+	/// Initializes scene (Rendering objects, shader programs, etc)
+	/// </summary>
+	void initializeScene();
+	
+	/// <summary>
+	/// Cleans up after anything initializes using initializeScene
+	/// </summary>
+	void cleanUpScene();
+
 	
 	/// <summary>
 	/// Handles resizing of the window and framebuffer

@@ -1,5 +1,9 @@
 #include "Window.h"
 
+namespace {
+
+}
+
 Window::Window() {
 	width = 800;
 	height = 600;

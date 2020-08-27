@@ -39,6 +39,14 @@ public:
 	~Window();
 
 	/// <summary>
+	/// ctor that creates a window with a user-specified width and height
+	/// </summary>
+	/// <param name="width"> Pixel width of window</param>
+	/// <param name="height"> Pixel height of window</param>
+	/// <returns> N/A </returns>
+	Window(int width, int height);
+
+	/// <summary>
 	/// Gets pointer to GLFWWindow
 	/// </summary>
 	/// <returns> GLFWwindow ptr </returns>

@@ -76,6 +76,9 @@ bool OBJObject::load(const char* path) {
 	int c1, c2, result;
 	unsigned int dummyHolder;
 
+	std::vector<glm::vec3> vertexHolder, normalHolder;
+	std::vector<glm::ivec3> indexHolder;
+
 	// Read file
 	std::cout << "Reading file from " << path << std::endl;
 	fopen_s(&fp, path, "rb");
@@ -109,13 +112,13 @@ bool OBJObject::load(const char* path) {
 				exit(EXIT_FAILURE);
 			}
 
-			vertices.push_back(glm::vec3(vertex));
+			vertexHolder.push_back(glm::vec3(vertex));
 		}
 		// Vertex normal
 		else if (c1 == 'v' && c2 == 'n') {
 			result = fscanf_s(fp, "%f %f %f\r\n",
 				&vertex.x, &vertex.y, &vertex.z);
-			normals.push_back(vertex);
+			normalHolder.push_back(vertex);
 
 			if (result != VEC_3_NUM_COMPONENTS) {
 				std::cout << "Parsing OBJ failure on vn\n";
@@ -123,6 +126,9 @@ bool OBJObject::load(const char* path) {
 			}
 		}
 		// Vertex textures
+		else if (c1 == 'v' && c2 == 't') {
+			// TODO
+		}
 
 		// Parameter space vertices
 
@@ -161,13 +167,20 @@ bool OBJObject::load(const char* path) {
 				std::cout << "Failed to parse face index data\r\n";
 				exit(EXIT_FAILURE);
 			}
-			
-			indices.push_back(index);
+			indexHolder.push_back(index);
 		}
 	}
 
-	// Idea for dealing with different vertex/normal indices
-	// Sort them both by order of first appearance listing in each face line
+	// Sort vertices by order of indices
+	glm::ivec3 currIndexVec = glm::ivec3(0, 1, 2);
+	for (auto triIndex : indexHolder) {
+		for (int i = 0; i < VEC_3_NUM_COMPONENTS; ++i) {
+			vertices.push_back(vertexHolder[triIndex[i]]);
+			normals.push_back(normalHolder[triIndex[i]]);
+		}
+		indices.push_back(currIndexVec);
+		currIndexVec += glm::ivec3(3);
+	}
 
 	fclose(fp);
 

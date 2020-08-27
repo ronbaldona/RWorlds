@@ -7,6 +7,10 @@ namespace {
 Window::Window() {
 	width = 800;
 	height = 600;
+
+	std::cout << "Initializing window of size " << width << " x ";
+	std::cout << height << std::endl;
+
 	windowptr = initGLFWWindowSettings(width, height);
 	initGLFWcallbacks();
 }
@@ -16,6 +20,13 @@ Window::~Window() {
 		glfwTerminate();
 		windowptr = nullptr;
 	}
+}
+
+Window::Window(int width, int height) {
+	this->width = width;
+	this->height = height;
+	windowptr = initGLFWWindowSettings(width, height);
+	initGLFWcallbacks();
 }
 
 GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {

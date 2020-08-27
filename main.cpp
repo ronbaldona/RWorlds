@@ -2,6 +2,26 @@
 
 #include "Window.h"
 
+static constexpr unsigned int STND_WIDTH = 800;
+static constexpr unsigned int STND_HEIGHT = 600;
+static long settings = 0x0;
+
+// USER SETTINGS
+static constexpr long PRINT_HELP = 0x1;
+static constexpr long SET_WINDOW = 0x2;
+
+// Other constants
+static constexpr int MAX_NUM_USAGE = 5;
+//static const std::string TEST_OBJ = "bunny.obj";
+
+
+inline std::string printUsageStatement() {
+	std::string usage = "===========\nUSAGE\n===========\n";
+	usage += "\t [-h] [-w width height] obj\n";
+	return usage;
+
+}
+
 // Initializes GLAD for OpenGL function uses
 int initOpenGLGlad() {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -17,12 +37,50 @@ int initOpenGLGlad() {
 // Initializes various OpenGL settings
 void initOpenGLSettings() {
 	glViewport(0, 0, 800, 600);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0, 1.0f, 1.0f, 1.0f);
 }
 
 int main(int argc, char* argv[]) {
+	std::string objToLoad;
+	int width = STND_WIDTH;
+	int height = STND_HEIGHT;
+
+	if (argc > MAX_NUM_USAGE) {
+		std::cout << "Error: Number of given arguments not supported!\n";
+		std::cout << printUsageStatement << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+	// Parse user usage arguments
+	// For now only deals with reading one scene object file
+	for (int i = 1; i < argc; ++i) {
+		if (argv[i][0] == '-') {
+			switch (argv[i][1]) {
+			case 'h':
+				settings |= PRINT_HELP;
+				break;
+			case 'w':
+				settings |= SET_WINDOW;
+				width = atoi(argv[i + 1]);
+				height = atoi(argv[i + 2]);
+				// move to next option
+				i += 2;
+				break;
+			}
+
+		}
+		// Assuming object name is a file name
+		else {
+			objToLoad = std::string(argv[i]);
+		}
+	}
+
+	// Deal with settings
+	if (settings | PRINT_HELP)
+		std::cout << printUsageStatement();
+
 	// Make sure to make the window BEFORE initializing GLAD
-	Window mainWindow = Window();
+	Window mainWindow = Window(width, height);
 
 	// Initialize GLAD
 	if (initOpenGLGlad() == EXIT_FAILURE)

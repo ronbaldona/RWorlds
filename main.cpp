@@ -7,12 +7,13 @@ static constexpr unsigned int STND_HEIGHT = 600;
 static long settings = 0x0;
 
 // USER SETTINGS
-static constexpr long PRINT_HELP = 0x1;
-static constexpr long SET_WINDOW = 0x2;
+static constexpr long PRINT_HELP_BIT = 0x1;
+static constexpr long OBJ_LOADED_BIT = 0x2;
+static constexpr long DEBUG_MODE_BIT = 0x4;
 
 // Other constants
-static constexpr int MAX_NUM_USAGE = 5;
-//static const std::string TEST_OBJ = "bunny.obj";
+static constexpr int MAX_NUM_USAGE = 6;
+static const std::string TEST_OBJ = "bunny.obj";
 
 
 inline std::string printUsageStatement() {
@@ -41,7 +42,7 @@ void initOpenGLSettings() {
 }
 
 int main(int argc, char* argv[]) {
-	std::string objToLoad;
+	std::string objToLoad = TEST_OBJ;
 	int width = STND_WIDTH;
 	int height = STND_HEIGHT;
 
@@ -57,10 +58,9 @@ int main(int argc, char* argv[]) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
 			case 'h':
-				settings |= PRINT_HELP;
+				settings |= PRINT_HELP_BIT;
 				break;
 			case 'w':
-				settings |= SET_WINDOW;
 				width = atoi(argv[i + 1]);
 				height = atoi(argv[i + 2]);
 				// move to next option
@@ -76,8 +76,10 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Deal with settings
-	if (settings | PRINT_HELP)
+	if (settings & PRINT_HELP_BIT)
 		std::cout << printUsageStatement();
+
+	std::cout << "Object to view: " << objToLoad << std::endl;
 
 	// Make sure to make the window BEFORE initializing GLAD
 	Window mainWindow = Window(width, height);

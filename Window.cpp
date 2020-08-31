@@ -1,6 +1,13 @@
 #include "Window.h"
+#include "Shader.h"
+
+#include "OBJObject.h"
 
 namespace {
+	// test objects
+	static Object* testObj;
+	static Shader* testShader;
+
 
 }
 
@@ -50,6 +57,14 @@ GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {
 
 GLFWwindow* Window::getWindowptr() const {
 	return windowptr;
+}
+
+void Window::initializeScene() {
+	testObj = new OBJObject("Models/bunny.obj");
+}
+
+void Window::cleanUpScene() {
+	delete testObj;
 }
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, 

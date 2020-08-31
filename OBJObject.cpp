@@ -9,6 +9,9 @@ namespace {
 
 
 OBJObject::~OBJObject() {
+	glDeleteBuffers(2, VBOs);
+	glDeleteBuffers(1, &EBO);
+	glDeleteVertexArrays(1, &VAO);
 
 }
 
@@ -19,7 +22,7 @@ OBJObject::OBJObject(const char* path) {
 
 	// Prepare object information to send to GPU
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(2, &VBOs[0]);
+	glGenBuffers(2, VBOs);
 	glGenBuffers(1, &EBO);
 
 	// Bind VAO to modify it
@@ -171,9 +174,15 @@ bool OBJObject::load(const char* path) {
 		}
 	}
 
+	std::cout << "Number of vertices: " << vertexHolder.size() << std::endl;
+	std::cout << "Number of vertex normals: " << normalHolder.size();
+	std::cout << std::endl;
+	std::cout << "Number of faces: " << indexHolder.size() << std::endl;
+
 	// Sort vertices by order of indices
 	glm::ivec3 currIndexVec = glm::ivec3(0, 1, 2);
 	for (auto triIndex : indexHolder) {
+		triIndex -= glm::ivec3(1);
 		for (int i = 0; i < VEC_3_NUM_COMPONENTS; ++i) {
 			vertices.push_back(vertexHolder[triIndex[i]]);
 			normals.push_back(normalHolder[triIndex[i]]);

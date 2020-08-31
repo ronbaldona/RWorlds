@@ -91,10 +91,14 @@ int main(int argc, char* argv[]) {
 	// Other OpenGL settings
 	initOpenGLSettings();
 
+	Window::initializeScene();
+
 	// Main render loop
 	while (!glfwWindowShouldClose(mainWindow.getWindowptr())) {
 		mainWindow.render();
 	}
+
+	Window::cleanUpScene();
 
 	return EXIT_SUCCESS;
 }

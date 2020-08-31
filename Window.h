@@ -12,11 +12,13 @@
 #include <iostream>
 
 #include "Object.h"
+#include "Camera.h"
 
 class Window {
 	// Window dimensions
 	int width, height;
 	// Camera settings
+	Camera mainCam;
 	glm::mat4 view, projection;
 	// Ptr to GLFW window object
 	GLFWwindow* windowptr;
@@ -56,12 +58,12 @@ public:
 	/// <summary>
 	/// Initializes scene (Rendering objects, shader programs, etc)
 	/// </summary>
-	void initializeScene();
+	static void initializeScene();
 	
 	/// <summary>
 	/// Cleans up after anything initializes using initializeScene
 	/// </summary>
-	void cleanUpScene();
+	static void cleanUpScene();
 
 	
 	/// <summary>

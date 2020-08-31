@@ -15,9 +15,6 @@ class OBJObject : public Object
     // TO BE ADDED LATER IF APPROPRIATE
     //std::vector<glm::vec2> texCoords;
 
-    // Add vertex array objects
-    GLuint VAO, VBOs[2], EBO;
-
     /// <summary>
     /// Helper function that parses the OBJ file
     /// </summary>
@@ -26,7 +23,12 @@ class OBJObject : public Object
     bool load(const char* path);
 
 public:
+    // Add vertex array objects
+    GLuint VAO, EBO;
+    GLuint VBOs[2];
+
     ~OBJObject();
+
 
     /// <summary>
     /// ctor that creates a 3D object from a wavefront OBJ file

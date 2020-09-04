@@ -56,7 +56,7 @@ OBJObject::OBJObject(const char* path) {
 	glVertexAttribPointer(1,  // Starts at layout location 1
 		3,  // 3 components per vertex
 		GL_FLOAT,  // of type GL_FLOAT
-		GL_FALSE,  // Do not normalize data
+		GL_TRUE,  // Do not normalize data
 		3 * sizeof(GL_FLOAT),  // Offset between consecutive vertices
 		(GLvoid*)0  // Offset of the 1st vertex component
 	);
@@ -73,11 +73,9 @@ OBJObject::OBJObject(const char* path) {
 
 bool OBJObject::load(const char* path) {
 	FILE* fp;
-	glm::vec3 vertex;
+	glm::vec3 vertex, normal;
 	glm::ivec3 index;
-	glm::vec3 color;
 	int c1, c2, result;
-	unsigned int dummyHolder;
 
 	std::vector<glm::vec3> vertexHolder, normalHolder;
 	std::vector<glm::ivec3> indexHolder;
@@ -115,13 +113,15 @@ bool OBJObject::load(const char* path) {
 				exit(EXIT_FAILURE);
 			}
 
-			vertexHolder.push_back(glm::vec3(vertex));
+			//vertexHolder.push_back(glm::vec3(vertex));
+			vertices.push_back(glm::vec3(vertex));
 		}
 		// Vertex normal
 		else if (c1 == 'v' && c2 == 'n') {
 			result = fscanf_s(fp, "%f %f %f\r\n",
-				&vertex.x, &vertex.y, &vertex.z);
-			normalHolder.push_back(vertex);
+				&normal.x, &normal.y, &normal.z);
+			//normalHolder.push_back(vertex);
+			normals.push_back(normalize(normal));
 
 			if (result != VEC_3_NUM_COMPONENTS) {
 				std::cout << "Parsing OBJ failure on vn\n";
@@ -141,9 +141,9 @@ bool OBJObject::load(const char* path) {
 			result = fscanf_s(fp, "%d//%*d %d//%*d %d//%*d\r\n",
 				&index.x, &index.y, &index.z);
 			
+			/*
 			// face also includes texture data but no normal data
 			if (result == 1) {
-				float dummy;
 				result = fscanf_s(fp, "%*d %d/%*d %d/%*d\r\n",
 					&index.y, &index.z);
 
@@ -164,25 +164,28 @@ bool OBJObject::load(const char* path) {
 					exit(EXIT_FAILURE);
 				}
 			}
+			*/
 
 			// Failed to parse face index data
-			else if (result != 3) {
+			//else if (result != 3) {
+			if (result != 3) {
 				std::cout << "Failed to parse face index data\r\n";
 				exit(EXIT_FAILURE);
 			}
-			indexHolder.push_back(index);
+			indices.push_back(index - glm::ivec3(1));
 		}
 	}
 
-	std::cout << "Number of vertices: " << vertexHolder.size() << std::endl;
-	std::cout << "Number of vertex normals: " << normalHolder.size();
+	std::cout << "Number of vertices: " << vertices.size() << std::endl;
+	std::cout << "Number of vertex normals: " << normals.size();
 	std::cout << std::endl;
-	std::cout << "Number of faces: " << indexHolder.size() << std::endl;
+	//std::cout << "Number of faces: " << indexHolder.size() << std::endl;
+	std::cout << "Number of faces: " << indices.size() << std::endl;
 
 	// Sort vertices by order of indices
+	/*
 	glm::ivec3 currIndexVec = glm::ivec3(0, 1, 2);
 	for (auto triIndex : indexHolder) {
-		triIndex -= glm::ivec3(1);
 		for (int i = 0; i < VEC_3_NUM_COMPONENTS; ++i) {
 			vertices.push_back(vertexHolder[triIndex[i]]);
 			normals.push_back(normalHolder[triIndex[i]]);
@@ -190,13 +193,44 @@ bool OBJObject::load(const char* path) {
 		indices.push_back(currIndexVec);
 		currIndexVec += glm::ivec3(3);
 	}
+	*/
 
 	fclose(fp);
 
-	return false;
+	return true;
 
 }
 
-void OBJObject::draw(GLuint shaderProg, glm::mat4 view, glm::mat4 projection) {
+void OBJObject::translate(float x, float y, float z) {
+	translate(glm::vec3(x, y, z));
+}
+void OBJObject::translate(glm::vec3 transVec) {
+	glm::mat4 translMat(1.0f);
+	for (int i = 0; i < 3; ++i) {
+		translMat[3][i] += transVec[i];
+	}
+	model = translMat * model;
+}
 
+void OBJObject::rotate(float angle, glm::vec3 axis) {
+	model = glm::rotate(model, angle, axis);
+}
+
+void OBJObject::scale(float sx, float sy, float sz) {
+	scale(glm::vec3(sx, sy, sz));
+}
+void OBJObject::scale(glm::vec3 scaleVec) {
+	model = glm::scale(model, scaleVec);
+}
+
+
+void OBJObject::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
+	shaderProg.use();
+	shaderProg.setMat4("model", model);
+	shaderProg.setMat4("view", view);
+	shaderProg.setMat4("projection", projection);
+
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, (int)indices.size() * 3, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 }

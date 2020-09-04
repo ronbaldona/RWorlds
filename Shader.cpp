@@ -19,6 +19,10 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	// Set exception masks
 	vertFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fragFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+	std::cout << "\nReading shader programs: " << vertPath;
+	std::cout << " and " << fragPath << std::endl;
+
 	try {
 		// Read file
 		vertFile.open(vertPath);
@@ -40,6 +44,8 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	const char* vertShaderCode, * fragShaderCode;
 	vertShaderCode = vertCode.c_str();
 	fragShaderCode = fragCode.c_str();
+
+	std::cout << "Compiling shaders\n";
 
 	// Now compile the shaders
 	unsigned int vertShader, fragShader;
@@ -71,6 +77,8 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 		std::cout << "Fragment shader compilation failed!\n";
 	}
 
+	std::cout << "Compiling and linking shaders to full program\n";
+
 	// Create full shader program
 	ID = glCreateProgram();
 	glAttachShader(ID, vertShader);
@@ -87,36 +95,40 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	// detached from the program (done also by glDeleteProgram)
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
+
+	std::cout << "Shader set up done!\n\n";
 }
 
 void Shader::setBool(const std::string& name, bool value) const {
-	// TODO
+	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
 
 void Shader::setInt(const std::string& name, int value) const {
-	// TODO
+	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
 
 void Shader::setFloat(const std::string& name, float value) const {
-	// TODO
+	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
 void Shader::setVec3(const std::string& name, glm::vec3 value) const {
-	// TODO
+	glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
 
 void Shader::setVec4(const std::string& name, glm::vec4 value) const {
-	// TODO
+	glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
 
 void Shader::setMat3(const std::string& name, glm::mat3 value) const {
-	// TODO
+	glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, 
+		glm::value_ptr(value));
 }
 
 void Shader::setMat4(const std::string& name, glm::mat4 value) const {
-	// TODO
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
+		glm::value_ptr(value));
 }
 
 void Shader::use() {
-    // TODO
+	glUseProgram(ID);
 }

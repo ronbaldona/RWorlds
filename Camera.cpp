@@ -2,8 +2,8 @@
 #include <iostream>
 
 // Standard camera settings
-const glm::vec3 EYE_STD = glm::vec3(0, 0, 0);
-const glm::vec3 CENTER_STD = glm::vec3(0, 0, -1);
+const glm::vec3 EYE_STD = glm::vec3(0, 0, 20);
+const glm::vec3 CENTER_STD = glm::vec3(0);
 const glm::vec3 UP_STD = glm::vec3(0, 1, 0);
 const float FOVY_STD = 60;
 const float NEAR_STD = 1;
@@ -17,7 +17,6 @@ Camera::Camera() {
     fovy = FOVY_STD;
     near = NEAR_STD;
     far = FAR_STD;
-    std::cout << "Default ctor\n";
 }
 
 Camera::Camera(glm::vec3 eye, glm::vec3 center, glm::vec3 up,
@@ -28,7 +27,6 @@ Camera::Camera(glm::vec3 eye, glm::vec3 center, glm::vec3 up,
     this->fovy = fovy;
     this->near = near;
     this->far = far;
-
 }
 
 glm::vec3 Camera::getEye() const {

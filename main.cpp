@@ -13,7 +13,7 @@ static constexpr long DEBUG_MODE_BIT = 0x4;
 
 // Other constants
 static constexpr int MAX_NUM_USAGE = 6;
-static const std::string TEST_OBJ = "bunny.obj";
+static const std::string TEST_OBJ = "Models/bear.obj";
 
 
 inline std::string printUsageStatement() {
@@ -37,8 +37,9 @@ int initOpenGLGlad() {
 
 // Initializes various OpenGL settings
 void initOpenGLSettings() {
+	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, 800, 600);
-	glClearColor(0, 1.0f, 1.0f, 1.0f);
+	glClearColor(0, 0, 0, 0);
 }
 
 int main(int argc, char* argv[]) {
@@ -91,6 +92,8 @@ int main(int argc, char* argv[]) {
 	// Other OpenGL settings
 	initOpenGLSettings();
 
+	// Initialize object in scene
+	Window::setObjToView(objToLoad);
 	Window::initializeScene();
 
 	// Main render loop

@@ -4,10 +4,16 @@
 #include "OBJObject.h"
 
 namespace {
+	std::string objPath = "Models/bunny.obj";
 	// test objects
-	static Object* testObj;
-	static Shader* testShader;
+	Object* testObj;
+	Shader* testShader;
 
+	// Camera/Window variables
+	int width, height;
+	Camera mainCam;
+	glm::mat4 view;
+	glm::mat4 projection;
 
 }
 
@@ -20,6 +26,9 @@ Window::Window() {
 
 	windowptr = initGLFWWindowSettings(width, height);
 	initGLFWcallbacks();
+	view = mainCam.getViewMat();
+	projection = mainCam.getProjMat(width, height);
+
 }
 
 Window::~Window() {
@@ -29,11 +38,17 @@ Window::~Window() {
 	}
 }
 
-Window::Window(int width, int height) {
-	this->width = width;
-	this->height = height;
+Window::Window(int _width, int _height) {
+	width = _width;
+	height = _height;
+
+	std::cout << "Initializing window of size " << width << " x ";
+	std::cout << height << std::endl;
+
 	windowptr = initGLFWWindowSettings(width, height);
 	initGLFWcallbacks();
+	view = mainCam.getViewMat();
+	projection = mainCam.getProjMat(width, height);
 }
 
 GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {
@@ -52,6 +67,7 @@ GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {
 		return nullptr;
 	}
 	glfwMakeContextCurrent(window);
+	std::cout << glfwGetVersionString() << std::endl;
 	return window;
 }
 
@@ -59,27 +75,48 @@ GLFWwindow* Window::getWindowptr() const {
 	return windowptr;
 }
 
+void Window::setObjToView(const std::string& path) {
+	objPath = path;
+}
+
 void Window::initializeScene() {
-	testObj = new OBJObject("Models/bunny.obj");
+	// Initialize objects
+	testObj = new OBJObject(objPath.c_str());
+
+	// Initialize shaders
+	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
 }
 
 void Window::cleanUpScene() {
+	// Clean up models
 	delete testObj;
+
+	// Clean up shaders
+	delete testShader;
 }
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, 
 	int height) {
+	projection = mainCam.getProjMat(width, height);
 	glViewport(0, 0, width, height);
 }
 
 void Window::key_callback(GLFWwindow* window, int key, int scancode, 
 	int action, int mods) {
 	if (action == GLFW_PRESS) {
-		switch (key) {
-		case GLFW_KEY_ESCAPE:
-			std::cout << "Closing window\n";
-			glfwSetWindowShouldClose(window, true);
-			break;
+		if (mods != GLFW_MOD_SHIFT) {
+			switch (key) {
+			case GLFW_KEY_ESCAPE:
+				std::cout << "Closing window\n";
+				glfwSetWindowShouldClose(window, true);
+				break;
+			case GLFW_KEY_S:
+				testObj->scale(glm::vec3(1.1f));
+				break;
+			default:
+				std::cout << "No action mapped to this key.\n";
+				break;
+			}
 		}
 	}
 }
@@ -91,7 +128,10 @@ void Window::initGLFWcallbacks() {
 }
 
 void Window::render() {
-	glClear(GL_COLOR_BUFFER_BIT);
+	// Clear color and depth buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	testObj->draw(*testShader, view, projection);
 
 	// Check for events and swap buffers
 	glfwSwapBuffers(windowptr);

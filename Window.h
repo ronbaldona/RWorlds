@@ -15,11 +15,6 @@
 #include "Camera.h"
 
 class Window {
-	// Window dimensions
-	int width, height;
-	// Camera settings
-	Camera mainCam;
-	glm::mat4 view, projection;
 	// Ptr to GLFW window object
 	GLFWwindow* windowptr;
 
@@ -46,7 +41,7 @@ public:
 	/// <param name="width"> Pixel width of window</param>
 	/// <param name="height"> Pixel height of window</param>
 	/// <returns> N/A </returns>
-	Window(int width, int height);
+	Window(int _width, int _height);
 
 	/// <summary>
 	/// Gets pointer to GLFWWindow
@@ -54,6 +49,11 @@ public:
 	/// <returns> GLFWwindow ptr </returns>
 	GLFWwindow* getWindowptr() const;
 
+	/// <summary>
+	/// Temporary function. Used to set obj to view
+	/// </summary>
+	/// <param name="path"></param>
+	static void setObjToView(const std::string& path);
 
 	/// <summary>
 	/// Initializes scene (Rendering objects, shader programs, etc)
@@ -64,7 +64,6 @@ public:
 	/// Cleans up after anything initializes using initializeScene
 	/// </summary>
 	static void cleanUpScene();
-
 	
 	/// <summary>
 	/// Handles resizing of the window and framebuffer

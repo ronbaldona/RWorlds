@@ -20,6 +20,8 @@ protected:
 	// Places object in world space
 	glm::mat4 model = glm::mat4(1.0f);
 
+	// Variables for tracking object
+
 	/// <summary>
 	/// Loads object from given file
 	/// </summary>
@@ -72,4 +74,8 @@ public:
 	/// <param name="scaleVec"> scale vals along axis </param>
 	virtual void scale(glm::vec3 scaleVec) = 0;
 
+	/// <summary>
+	/// Resets object's transformations
+	/// </summary>
+	virtual void reset() = 0;
 };

@@ -18,6 +18,10 @@ void BoundingBox3D::scale(glm::vec3 scaleVec) {
 	//TODO
 }
 
+void BoundingBox3D::reset() {
+//TODO
+}
+
 void BoundingBox3D::draw(Shader shaderProg, glm::mat4 view,
 	glm::mat4 projection) {
 	// TODO

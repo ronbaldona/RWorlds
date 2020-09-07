@@ -13,7 +13,7 @@ static constexpr long DEBUG_MODE_BIT = 0x4;
 
 // Other constants
 static constexpr int MAX_NUM_USAGE = 6;
-static const std::string TEST_OBJ = "Models/bear.obj";
+static const std::string TEST_OBJ = "Models/bunny.obj";
 
 
 inline std::string printUsageStatement() {

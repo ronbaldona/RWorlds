@@ -20,3 +20,7 @@ void Object3D::scale(float sx, float sy, float sz) {
 void Object3D::scale(glm::vec3 scaleVec) {
 	//TODO
 }
+
+void Object3D::reset() {
+	//TODO
+}

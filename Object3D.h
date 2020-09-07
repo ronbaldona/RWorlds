@@ -57,4 +57,9 @@ public:
 	/// <param name="scaleVec"> scale vals along axis </param>
 	void scale(glm::vec3 scaleVec);
 
+	/// <summary>
+	/// Resets object's transformations
+	/// </summary>
+	void reset();
+
 };

@@ -85,6 +85,31 @@ public:
 		int mods);
 
 	/// <summary>
+	/// Callback function for getting cursor position over window
+	/// </summary>
+	/// <param name="window"> Pointer to GLFW window </param>
+	/// <param name="xpos"> x position of cursor on screen space </param>
+	/// <param name="ypos"> y position of cursor on screen space </param>
+	static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+
+	/// <summary>
+	/// Callback function for dealing with mouse button presses
+	/// </summary>
+	/// <param name="window"> Pointer to GLFW window </param>
+	/// <param name="button"> ID of mouse button pressed </param>
+	/// <param name="action"> Action IDs </param>
+	/// <param name="mods">< Modification ID /param>
+	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
+	/// <summary>
+	/// Callback function for dealing with scrolling
+	/// </summary>
+	/// <param name="window"> GLFWwindow pointer </param>
+	/// <param name="xoffset"> amount of offset in x axis </param>
+	/// <param name="yoffset"> amount of offset in y axis </param>
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+	/// <summary>
 	/// Renders to window
 	/// </summary>
 	void render();

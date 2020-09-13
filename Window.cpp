@@ -127,7 +127,8 @@ void Window::setObjToView(const std::string& path) {
 
 void Window::initializeScene() {
 	// Initialize objects
-	testObj = new OBJObject(objPath.c_str());
+	//testObj = new OBJObject(objPath.c_str());
+	testObj = new Model(objPath.c_str());
 
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
@@ -152,6 +153,7 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 	// TODO: Add caps lock check
 	if (action == GLFW_PRESS) {
 		// both lower and upper case
+		/*
 		if (key == GLFW_KEY_ESCAPE) {
 			std::cout << "Closing window\n";
 			glfwSetWindowShouldClose(window, true);
@@ -159,6 +161,28 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 		}
 		if (key == GLFW_KEY_R) {
 			testObj->reset();
+		}
+		*/
+		switch (key) {
+		case GLFW_KEY_ESCAPE:
+			std::cout << "Closing window\n";
+			glfwSetWindowShouldClose(window, true);
+			return;
+		case GLFW_KEY_R:
+			testObj->reset();
+			break;
+		case GLFW_KEY_UP:
+			testObj->translate(0, 1.0f, 0);
+			break;
+		case GLFW_KEY_DOWN:
+			testObj->translate(0, -1.0f, 0);
+			break;
+		case GLFW_KEY_LEFT:
+			testObj->translate(-1.0f, 0, 0);
+			break;
+		case GLFW_KEY_RIGHT:
+			testObj->translate(1.0f, 0, 0);
+			break;
 		}
 
 		// lower case
@@ -234,7 +258,7 @@ void Window::mouse_button_callback(GLFWwindow* window, int button, int action,
 
 void Window::scroll_callback(GLFWwindow* window, double xoffset,
 	double yoffset) {
-	//TODO
+	testObj->translate(glm::vec3(0, 0, -yoffset));
 }
 
 void Window::initGLFWcallbacks() {

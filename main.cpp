@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Window.h"
+#include "PrintDebug.hpp"
 
 static constexpr unsigned int STND_WIDTH = 800;
 static constexpr unsigned int STND_HEIGHT = 600;
@@ -13,7 +14,7 @@ static constexpr long DEBUG_MODE_BIT = 0x4;
 
 // Other constants
 static constexpr int MAX_NUM_USAGE = 6;
-static const std::string TEST_OBJ = "Models/bunny.obj";
+static const std::string TEST_OBJ = "Models/bear.obj";
 
 
 inline std::string printUsageStatement() {

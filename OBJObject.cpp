@@ -213,13 +213,23 @@ void OBJObject::translate(glm::vec3 transVec) {
 }
 
 void OBJObject::rotate(float angle, glm::vec3 axis) {
+	/*
 	if (glm::length(glm::normalize(axis)) < 1.0f - 1e-4f) {
 		std::cout << "Error, axis of rotation given is invalid\n";
 		return;
 	}
+	*/
 	// TODO: Check on differences between these two later
 	//model = glm::rotate(model, angle, axis);
-	model = glm::rotate(glm::mat4(1.0f), angle, axis) * model;
+	//model = glm::rotate(glm::mat4(1.0f), angle, axis) * model;
+	glm::mat3 rotMat = glm::rotate(glm::mat4(1.0f), angle, axis);
+	glm::mat3 holder = rotMat * glm::mat3(model);
+	glm::vec3 transVec = glm::vec3(model[3].x, model[3].y, model[3].z);
+	
+	model = glm::mat4(holder);
+	model[3].x = transVec.x;
+	model[3].y = transVec.y;
+	model[3].z = transVec.z;
 }
 
 void OBJObject::scale(float sx, float sy, float sz) {

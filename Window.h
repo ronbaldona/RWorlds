@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "Object.h"
+#include "Model.h"
 #include "Camera.h"
 
 class Window {

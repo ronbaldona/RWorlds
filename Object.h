@@ -26,7 +26,7 @@ protected:
 	/// Loads object from given file
 	/// </summary>
 	/// <param name="path"> File path name of object </param>
-	/// <returns> True if successful, Otherwise false</returns>
+	/// <returns> True if successful, Otherwise false </returns>
 	virtual bool load(const char* path) = 0;
 
 public:

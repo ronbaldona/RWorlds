@@ -61,3 +61,18 @@ void Mesh::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
     glDrawElements(GL_TRIANGLES, (int)indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+
+
+void Mesh::draw(Shader shaderProg, glm::mat4& model, glm::mat4& view, 
+    glm::mat4& projection) {
+
+    // TODO Change this later
+    shaderProg.use();
+    shaderProg.setMat4("model", model);
+    shaderProg.setMat4("view", view);
+    shaderProg.setMat4("projection", projection);
+
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, (int)indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}

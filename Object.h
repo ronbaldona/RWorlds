@@ -20,8 +20,6 @@ protected:
 	// Places object in world space
 	glm::mat4 model = glm::mat4(1.0f);
 
-	// Variables for tracking object
-
 	/// <summary>
 	/// Loads object from given file
 	/// </summary>
@@ -39,8 +37,6 @@ public:
 	/// <param name="projection"> projection transformation matrix </param>
 	virtual void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) = 0;
 
-	// ADD UPDATE FUNCTIONS HERE AS NEEDED
-	
 	/// <summary>
 	/// Translates the object
 	/// </summary>

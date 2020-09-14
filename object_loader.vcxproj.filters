@@ -36,20 +36,11 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BoundingBox3D.cpp">
-      <Filter>Source Files\Drawable Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3D.cpp">
-      <Filter>Source Files\Drawable Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJObject.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
@@ -68,20 +59,11 @@
     <ClInclude Include="Object.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>Header Files\Drawable Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BoundingBox3D.h">
-      <Filter>Header Files\Drawable Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OBJObject.h">
       <Filter>Header Files\Drawable Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>

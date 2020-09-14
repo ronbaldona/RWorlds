@@ -10,7 +10,7 @@ namespace {
 	Shader* testShader;
 
 	// Camera/Window variables
-	int width, height;
+	int wWidth, wHeight;
 	Camera mainCam;
 	glm::mat4 view;
 	glm::mat4 projection;
@@ -29,9 +29,9 @@ namespace {
 /// <param name="xpos"> x position of cursor. A return parameter </param>
 /// <param name="ypos"> y position of cursor. A return parameter </param>
 inline void cursorPosChangeBasis(double& xpos, double& ypos) {
-	double smallDim = (width > height) ? height : width;
-	xpos = (xpos - (double)(0.5 * width)) / (double)(0.5 * smallDim);
-	ypos = ((double)(0.5 * height) -  ypos) / (double)(0.5 * smallDim);
+	double smallDim = (wWidth > wHeight) ? wHeight : wWidth;
+	xpos = (xpos - (double)(0.5 * wWidth)) / (double)(0.5 * smallDim);
+	ypos = ((double)(0.5 * wHeight) -  ypos) / (double)(0.5 * smallDim);
 }
 
 /// <summary>
@@ -56,16 +56,16 @@ inline glm::vec3 projectCursorOntoSphere(double xpos, double ypos) {
 }
 
 Window::Window() {
-	width = 800;
-	height = 600;
+	wWidth = 800;
+	wHeight = 600;
 
-	std::cout << "Initializing window of size " << width << " x ";
-	std::cout << height << std::endl;
+	std::cout << "Initializing window of size " << wWidth << " x ";
+	std::cout << wHeight << std::endl;
 
-	windowptr = initGLFWWindowSettings(width, height);
+	windowptr = initGLFWWindowSettings(wWidth, wHeight);
 	initGLFWcallbacks();
 	view = mainCam.getViewMat();
-	projection = mainCam.getProjMat(width, height);
+	projection = mainCam.getProjMat(wWidth, wHeight);
 
 }
 
@@ -77,16 +77,16 @@ Window::~Window() {
 }
 
 Window::Window(int _width, int _height) {
-	width = _width;
-	height = _height;
+	wWidth = _width;
+	wHeight = _height;
 
-	std::cout << "Initializing window of size " << width << " x ";
-	std::cout << height << std::endl;
+	std::cout << "Initializing window of size " << wWidth << " x ";
+	std::cout << wHeight << std::endl;
 
-	windowptr = initGLFWWindowSettings(width, height);
+	windowptr = initGLFWWindowSettings(wWidth, wHeight);
 	initGLFWcallbacks();
 	view = mainCam.getViewMat();
-	projection = mainCam.getProjMat(width, height);
+	projection = mainCam.getProjMat(wWidth, wHeight);
 }
 
 GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {
@@ -144,6 +144,8 @@ void Window::cleanUpScene() {
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, 
 	int height) {
+	wWidth = width;
+	wHeight = height;
 	projection = mainCam.getProjMat(width, height);
 	glViewport(0, 0, width, height);
 }

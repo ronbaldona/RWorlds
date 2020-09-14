@@ -1,5 +1,5 @@
 /*
-    Handles display window and events
+    Handles display window and event handling.
 	
 	- RAB
  */

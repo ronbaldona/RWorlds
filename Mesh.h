@@ -50,15 +50,34 @@ public:
     std::vector<Texture> textures;
 
     /// <summary>
-    /// 
+    /// Mesh constructor. Copies all info from passed vector objects
     /// </summary>
-    /// <param name="vertices"></param>
-    /// <param name="indices"></param>
-    /// <param name="textures"></param>
-    /// <returns></returns>
+    /// <param name="vertices"> contains position info </param>
+    /// <param name="indices"> contains index info </param>
+    /// <param name="textures"> contains texture info </param>
+    /// <returns> N/A </returns>
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
         std::vector<Texture> textures);
 
+    /// <summary>
+    /// DEPRECATED. Draws mesh to screen
+    /// </summary>
+    /// <param name="shaderProg"> Shader program </param>
+    /// <param name="view"> view matrix</param>
+    /// <param name="projection"> projection matrix </param>
     void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection);
+
+    /// <summary>
+    /// Draws mesh to screen
+    /// </summary>
+    /// <param name="shaderProg"> Shader program </param>
+    /// <param name="model"> model matrix </param>
+    /// <param name="view"> view matrix </param>
+    /// <param name="projection"> projection matrix </param>
+    void draw(Shader shaderProg,
+        glm::mat4& model,
+        glm::mat4& view,
+        glm::mat4& projection);
+
 };
 

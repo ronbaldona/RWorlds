@@ -1,8 +1,7 @@
 #include "Model.h"
 
 Model::Model(const char* path) {
-	//std::string sPath = path;
-	//loadModel(sPath);
+	model = glm::mat4(1.0f);
 	if (!load(path)) {
 		std::cout << "Exiting program...\n";
 		exit(EXIT_FAILURE);
@@ -19,7 +18,8 @@ Model::~Model() {
 
 void Model::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 	for (auto mesh : meshes) {
-		mesh.draw(shaderProg, view, projection);
+		//mesh.draw(shaderProg, view, projection);
+		mesh.draw(shaderProg, model, view, projection);
 	}
 }
 
@@ -65,30 +65,35 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	// Load vertex info
 	Vertex vertex;
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		vertex.position = glm::vec3(mesh->mVertices[i].x, 
+		vertex.position = glm::vec3(
+			mesh->mVertices[i].x, 
 			mesh->mVertices[i].y,
-			mesh->mVertices[i].z);
+			mesh->mVertices[i].z
+		);
 
-		vertex.normal = glm::vec3(mesh->mNormals[i].x,
-			mesh->mNormals[i].y,
-			mesh->mNormals[i].z);
+		vertex.normal = glm::normalize(
+			glm::vec3(
+				mesh->mNormals[i].x,
+				mesh->mNormals[i].y, 
+				mesh->mNormals[i].z
+			)
+		);
 
 		if (mesh->HasTextureCoords(0)) {
 			vertex.texCoords = glm::vec2(mesh->mTextureCoords[0][i].x,
 				mesh->mTextureCoords[0][i].y);
 		}
-		else {
+		else 
 			vertex.texCoords = glm::vec2(0);
-		}
+		
 		vertices.push_back(vertex);
 	}
 
 	// Load indices
 	for (unsigned int i = 0; i < mesh->mNumFaces; ++i) {
 		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; ++j) {
+		for (unsigned int j = 0; j < face.mNumIndices; ++j)
 			indices.push_back(face.mIndices[j]);
-		}
 	}
 	/*
 	if (mesh->mMaterialIndex >= 0) {
@@ -140,9 +145,6 @@ void Model::rotate(float angle, glm::vec3 axis) {
 		return;
 	}
 	*/
-	// TODO: Check on differences between these two later
-	//model = glm::rotate(model, angle, axis);
-	//model = glm::rotate(glm::mat4(1.0f), angle, axis) * model;
 	glm::mat3 rotMat = glm::rotate(glm::mat4(1.0f), angle, axis);
 	glm::mat3 holder = rotMat * glm::mat3(model);
 	glm::vec3 transVec = glm::vec3(model[3].x, model[3].y, model[3].z);

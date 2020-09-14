@@ -151,28 +151,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingBox3D.cpp" />
     <ClCompile Include="C:\OpenGL\include\glad.c" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="OBJObject.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingBox3D.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Object3D.h" />
     <ClInclude Include="OBJObject.h" />
     <ClInclude Include="PrintDebug.hpp" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

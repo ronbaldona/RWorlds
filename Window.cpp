@@ -7,6 +7,9 @@ namespace {
 	std::string objPath = "Models/bunny.obj";
 	// test objects
 	Object* testObj;
+	Skybox* skybox;
+
+	Shader* skyboxShader;
 	Shader* testShader;
 
 	// Camera/Window variables
@@ -130,16 +133,22 @@ void Window::initializeScene() {
 	//testObj = new OBJObject(objPath.c_str());
 	testObj = new Model(objPath.c_str());
 
+	skybox = new Skybox();
+
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
+	skyboxShader = new Shader("Shader/Skybox.vert", "Shader/Skybox.frag");
 }
 
 void Window::cleanUpScene() {
 	// Clean up models
 	delete testObj;
 
+	delete skybox;
+
 	// Clean up shaders
 	delete testShader;
+	delete skyboxShader;
 }
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, 
@@ -213,8 +222,6 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 
 void Window::cursor_position_callback(GLFWwindow* window, double xpos, 
 	double ypos) {
-	//std::cout << "Cursor position: " << xpos << " " << ypos << std::endl;
-
 	// Get new pos in new basis
 	if (lmbPressed) {
 		// Project both new and old positions to unit sphere
@@ -277,6 +284,7 @@ void Window::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	testObj->draw(*testShader, view, projection);
+	skybox->draw(*skyboxShader, view, projection);
 
 	// Check for events and swap buffers
 	glfwSwapBuffers(windowptr);

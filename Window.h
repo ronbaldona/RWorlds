@@ -3,7 +3,7 @@
 	
 	- RAB
  */
-// TODO: Look into SINGLETON classes. Should this be a singleton?
+// TODO: Redesign window as singleton
 #pragma once
 
 #include <glad/glad.h>
@@ -14,6 +14,7 @@
 #include "Object.h"
 #include "Model.h"
 #include "Camera.h"
+#include "Skybox.h"
 
 class Window {
 	// Ptr to GLFW window object

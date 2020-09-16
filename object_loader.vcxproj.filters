@@ -48,6 +48,12 @@
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
     </ClCompile>
+    <ClCompile Include="stb_img_imp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -74,12 +80,24 @@
     <ClInclude Include="PrintDebug.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\test.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Shaders\test.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Skybox.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Skybox.frag">
       <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>

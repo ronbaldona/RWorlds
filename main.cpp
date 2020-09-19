@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Window.h"
-#include "PrintDebug.hpp"
+#include "PrintDebug.h"
 
 static constexpr unsigned int STND_WIDTH = 800;
 static constexpr unsigned int STND_HEIGHT = 600;

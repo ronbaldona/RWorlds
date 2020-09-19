@@ -11,10 +11,13 @@
 
 #include <iostream>
 
+#include "PrintDebug.h"
+
 #include "Object.h"
 #include "Model.h"
 #include "Camera.h"
 #include "Skybox.h"
+
 
 class Window {
 	// Ptr to GLFW window object

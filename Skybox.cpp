@@ -1,14 +1,16 @@
 #include "Skybox.h"
 
+#include "PrintDebug.h"
+
 const glm::vec3 Skybox::vertices[8] = {
-	glm::vec3(-0.5f, -0.5f, 0.5f),
-	glm::vec3(0.5f, -0.5f, 0.5f),
-	glm::vec3(-0.5f, -0.5f, -0.5f),
-	glm::vec3(0.5f, -0.5f, -0.5f),
-	glm::vec3(-0.5f, 0.5f, 0.5f),
-	glm::vec3(0.5f, 0.5f, 0.5f),
-	glm::vec3(-0.5f, 0.5f, -0.5f),
-	glm::vec3(0.5f, 0.5f, -0.5f)
+	glm::vec3(-1.0f, -1.0f, 1.0f),
+	glm::vec3(1.0f, -1.0f, 1.0f),
+	glm::vec3(-1.0f, -1.0f, -1.0f),
+	glm::vec3(1.0f, -1.0f, -1.0f),
+	glm::vec3(-1.0f, 1.0f, 1.0f),
+	glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(-1.0f, 1.0f, -1.0f),
+	glm::vec3(1.0f, 1.0f, -1.0f)
 };
 
 const glm::ivec3 Skybox::indices[12] = {
@@ -196,9 +198,10 @@ void Skybox::init() {
 }
 
 void Skybox::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
+	glDepthFunc(GL_LEQUAL);
 	shaderProg.use();
-	
-	shaderProg.setMat4("view", view);
+	glm::mat4 newView = glm::mat4(glm::mat3(view));
+	shaderProg.setMat4("view", newView);
 	shaderProg.setMat4("projection", projection);
 
 	glBindVertexArray(VAO);
@@ -206,4 +209,5 @@ void Skybox::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texId);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glDepthFunc(GL_LESS);
 }

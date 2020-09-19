@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Shaders">
       <UniqueIdentifier>{5a6d47f8-188d-4ece-8aee-98d351efde94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Debug">
+      <UniqueIdentifier>{c462fb00-e5a6-4a33-9bd2-a58789a52c96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PrintDebug.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -77,13 +83,13 @@
     <ClInclude Include="Model.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
-    <ClInclude Include="PrintDebug.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

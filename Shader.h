@@ -22,7 +22,6 @@ class Shader
 
 public:
 	Shader();
-	~Shader();
 
 	// Add more shader constructors HERE
 	
@@ -33,6 +32,8 @@ public:
 	/// <param name="fragPath"> File path to the fragment shader </param>
 	/// <returns> N/A </returns>
 	Shader(const char* vertPath, const char* fragPath);
+
+	void deleteShader();
 	
 	// Uniform setter functions
 	/// <summary>
@@ -53,6 +54,11 @@ public:
 	void setMat3(const std::string& name, glm::mat3 value) const;
 	// Same as above but with glm::mat4
 	void setMat4(const std::string& name, glm::mat4 value) const;
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void printShaderProgramInfoLong() const;
 
 	/// <summary>
     /// Tell OpenGL to use this shader

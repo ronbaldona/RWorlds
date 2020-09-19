@@ -5,9 +5,6 @@ Shader::Shader() {
 	ID = 0;
 }
 
-Shader::~Shader() {
-	glDeleteProgram(ID);
-}
 
 Shader::Shader(const char* vertPath, const char* fragPath) {
 	// Read the shader code as a string stream
@@ -90,6 +87,10 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 		glGetProgramInfoLog(ID, BUFSIZ, nullptr, infoLog);
 		std::cout << "Shader linking program failed\n";
 	}
+	glValidateProgram(ID);
+
+
+	std::cout << "Shader ID: " << ID << std::endl;
 
 	// Flag the shaders for deletion. They will be deleted once they are 
 	// detached from the program (done also by glDeleteProgram)
@@ -97,6 +98,10 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	glDeleteShader(fragShader);
 
 	std::cout << "Shader set up done!\n\n";
+}
+
+void Shader::deleteShader() {
+	glDeleteProgram(ID);
 }
 
 void Shader::setBool(const std::string& name, bool value) const {
@@ -131,4 +136,35 @@ void Shader::setMat4(const std::string& name, glm::mat4 value) const {
 
 void Shader::use() {
 	glUseProgram(ID);
+}
+
+void Shader::printShaderProgramInfoLong() const {
+	// ID
+	std::cout << "Shader ID: " << ID << std::endl;
+
+	int info;
+	char infoLog[BUFSIZ];
+	glValidateProgram(ID);
+	glGetProgramiv(ID, GL_VALIDATE_STATUS, &info);
+	if (!info) {
+		std::cout << "- Has failed program validation\n";
+		glGetProgramInfoLog(ID, BUFSIZ, nullptr, infoLog);
+	}
+
+	// Is shader flagged for deletion
+	glGetProgramiv(ID, GL_DELETE_STATUS, &info);
+	if (info)
+		std::cout << "- Is flagged for deletion\n";
+
+	// Get number of attached shaders
+	glGetProgramiv(ID, GL_ATTACHED_SHADERS, &info);
+	std::cout << "- Has " << info << " shaders attached\n";
+
+	// Get number of active attributes
+	glGetProgramiv(ID, GL_ACTIVE_ATTRIBUTES, &info);
+	std::cout << "- Has " << info << " attributes\n";
+
+	// Get number of active uniforms
+	glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &info);
+	std::cout << "- Has " << info << " uniforms\n";
 }

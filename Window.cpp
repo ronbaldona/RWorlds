@@ -4,6 +4,7 @@
 #include "OBJObject.h"
 
 namespace {
+	// TODO: CLEAN UP BY ADDING SIMPLE FILE LOADING SYSTEM
 	std::string objPath = "Models/bunny.obj";
 	// test objects
 	Object* testObj;
@@ -22,6 +23,14 @@ namespace {
 	bool lmbPressed = false;
 	double oldPos[2];
 	glm::vec3 oldPosVec;
+
+	// FPS camera mode variables
+	glm::vec2 lastCursorPos;
+
+	// Modes
+	enum CAMERA_MODES{ OBJECT_MODE, FPS_MODE };
+	int CURR_CAM_MODE = OBJECT_MODE;
+	int NUM_CAM_MODES = 2;
 }
 
 /// <summary>
@@ -117,6 +126,8 @@ GLFWwindow* Window::initGLFWWindowSettings(int width, int height) {
 	else
 		std::cout << "Raw mouse motion not supported\n";
 
+	lastCursorPos = glm::vec2(0.5f * width, 0.5f * height);
+
 	return window;
 }
 
@@ -137,7 +148,7 @@ void Window::initializeScene() {
 
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
-	skyboxShader = new Shader("Shader/Skybox.vert", "Shader/Skybox.frag");
+	skyboxShader = new Shader("Shaders/Skybox.vert", "Shaders/Skybox.frag");
 }
 
 void Window::cleanUpScene() {
@@ -147,7 +158,9 @@ void Window::cleanUpScene() {
 	delete skybox;
 
 	// Clean up shaders
+	testShader->deleteShader();
 	delete testShader;
+	skyboxShader->deleteShader();
 	delete skyboxShader;
 }
 
@@ -155,6 +168,7 @@ void Window::framebuffer_size_callback(GLFWwindow* window, int width,
 	int height) {
 	wWidth = width;
 	wHeight = height;
+	lastCursorPos = glm::vec2(0.5f * width, 0.5f * height);
 	projection = mainCam.getProjMat(width, height);
 	glViewport(0, 0, width, height);
 }
@@ -163,17 +177,6 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 	int action, int mods) {
 	// TODO: Add caps lock check
 	if (action == GLFW_PRESS) {
-		// both lower and upper case
-		/*
-		if (key == GLFW_KEY_ESCAPE) {
-			std::cout << "Closing window\n";
-			glfwSetWindowShouldClose(window, true);
-			return;
-		}
-		if (key == GLFW_KEY_R) {
-			testObj->reset();
-		}
-		*/
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
 			std::cout << "Closing window\n";
@@ -194,6 +197,14 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 		case GLFW_KEY_RIGHT:
 			testObj->translate(1.0f, 0, 0);
 			break;
+		case GLFW_KEY_C:
+			CURR_CAM_MODE = ++CURR_CAM_MODE % NUM_CAM_MODES;
+			std::cout << "CAM MODE: " << CURR_CAM_MODE << std::endl;
+			if (CURR_CAM_MODE == FPS_MODE)
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			else
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
 		}
 
 		// lower case
@@ -239,6 +250,14 @@ void Window::cursor_position_callback(GLFWwindow* window, double xpos,
 		}
 	}
 
+	if (CURR_CAM_MODE == FPS_MODE) {
+		mainCam.rotateCamFromMouseMove((float)(lastCursorPos.x - xpos),
+			                           (float)(lastCursorPos.y - ypos));
+		view = mainCam.getViewMat();
+		lastCursorPos = glm::vec2((float)xpos, (float)ypos);
+	}
+
+
 
 	//std::cout << "Cursor position: " << xpos << " " << ypos << std::endl;
 }
@@ -247,7 +266,6 @@ void Window::mouse_button_callback(GLFWwindow* window, int button, int action,
 	int mods) {
 	//TODO
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
-		// TODO: OPTIMIZE THIS
 		if (action == GLFW_PRESS) {
 			// Set cursor and motion modes
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
@@ -263,6 +281,7 @@ void Window::mouse_button_callback(GLFWwindow* window, int button, int action,
 			lmbPressed = false;
 		}
 	}
+
 }
 
 void Window::scroll_callback(GLFWwindow* window, double xoffset,
@@ -282,7 +301,6 @@ void Window::initGLFWcallbacks() {
 void Window::render() {
 	// Clear color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	testObj->draw(*testShader, view, projection);
 	skybox->draw(*skyboxShader, view, projection);
 

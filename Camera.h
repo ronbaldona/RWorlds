@@ -15,6 +15,9 @@ class Camera {
 	// For defining the camera view frustum
 	float fovy, near, far;
 
+	// For defining camera movement
+	float pitch, yaw;
+
 	/// <summary>
 	/// Makes sure up vector is orthogonal in camera coordinate system
 	/// Will set the eyem center, and corrected up vector from given parameters
@@ -25,6 +28,9 @@ class Camera {
 	void fixCameraVecs(glm::vec3 eye,
 	                   glm::vec3 center, 
 		               glm::vec3 up);
+
+
+	void calcPitchAndYaw(float& pitch, float& yaw) const;
 
 public:
 	/// <summary>
@@ -95,5 +101,15 @@ public:
 	void setCameraCoordSystem(glm::vec3 eye,
 		                      glm::vec3 center,
 		                      glm::vec3 up);
+
+	
+
+	/// <summary>
+	/// Rotates camera based on mouse cursor movement
+	/// </summary>
+	/// <param name="offsetX"> X offset of camera movement</param>
+	/// <param name="offsetY"> Y offset of camera movement</param>
+	void rotateCamFromMouseMove(float offsetX, float offsetY);
+
 
 };

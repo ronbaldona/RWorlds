@@ -1,5 +1,6 @@
 /*
-    Handles loading and using any OpenGL shader programs
+    Handles loading and using any OpenGL shader programs. Special thanks to
+	learnopengl.com!
 
 	- RAB
  */

@@ -1,5 +1,5 @@
 /*
-    Handles display window and event handling.
+    Uses glfw for event handling and displaying
 	
 	- RAB
  */
@@ -113,6 +113,9 @@ public:
 	/// <param name="xoffset"> amount of offset in x axis </param>
 	/// <param name="yoffset"> amount of offset in y axis </param>
 	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+	void processKeyInput() const;
+
 
 	/// <summary>
 	/// Renders to window

@@ -1,3 +1,6 @@
+/*  Rudimentary debug printing functions and error handling
+    - RAB
+ */
 #pragma once
 
 #include <glm/glm.hpp>

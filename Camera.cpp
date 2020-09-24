@@ -108,13 +108,26 @@ void Camera::calcPitchAndYaw(float& pitch, float& yaw) const {
 }
 
 /*         MOVEMENT FUNCTIONS          */
+void Camera::moveCam(glm::vec3 translate) {
+    eye += translate;
+    center += translate;
+}
+
 void Camera::rotateCamFromMouseMove(float offsetX, float offsetY) {
     float sensitivity = 0.1f;
 
     pitch += glm::radians(offsetY * sensitivity);
     yaw += glm::radians(offsetX * sensitivity);
+
+    // For numerical stability
     if (yaw > 2.5f * glm::pi<float>() || yaw < -1.5 * glm::pi<float>())
         yaw = 0.5f * glm::pi<float>();
+    
+    // Limit ability to look up and down to just straight up/down
+    if (pitch > MAX_LOOK_ANGLE)
+        pitch = MAX_LOOK_ANGLE;
+    else if (pitch < -MAX_LOOK_ANGLE)
+        pitch = -MAX_LOOK_ANGLE;
 
     glm::vec3 direction(
         cos(yaw) * cos(pitch),
@@ -123,5 +136,4 @@ void Camera::rotateCamFromMouseMove(float offsetX, float offsetY) {
      );
     // Change camera matrix based on new values
     fixCameraVecs(eye, eye + direction, glm::vec3(0, 1.0f, 0));
-
 }

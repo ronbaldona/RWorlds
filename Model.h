@@ -1,4 +1,5 @@
-/*  Assimp object loader that loads a full model
+/*  Assimp object loader that loads a full model based out of meshes. Will be
+    expanded to load textures
     - RAB
  */
 #pragma once
@@ -90,6 +91,7 @@ public:
 	/// <param name="sy"> scale val along y </param>
 	/// <param name="sz"> scale val along z </param>
 	void scale(float sx, float sy, float sz);
+
 	/// <summary>
 	/// Scale object
 	/// </summary>
@@ -100,4 +102,9 @@ public:
 	/// Resets object's transformations
 	/// </summary>
 	void reset();
+
+	/// <summary>
+	/// Centers object to origin
+	/// </summary>
+	void centerToOrigin();
 };

@@ -1,21 +1,4 @@
-#include <iostream>
-
-#include "Window.h"
-#include "PrintDebug.h"
-
-static constexpr unsigned int STND_WIDTH = 800;
-static constexpr unsigned int STND_HEIGHT = 600;
-static long settings = 0x0;
-
-// USER SETTINGS
-static constexpr long PRINT_HELP_BIT = 0x1;
-static constexpr long OBJ_LOADED_BIT = 0x2;
-static constexpr long DEBUG_MODE_BIT = 0x4;
-
-// Other constants
-static constexpr int MAX_NUM_USAGE = 6;
-static const std::string TEST_OBJ = "Models/happy-buddha.fbx";
-
+#include "main.h"
 
 inline std::string printUsageStatement() {
 	std::string usage = "===========\nUSAGE\n===========\n";
@@ -38,7 +21,10 @@ int initOpenGLGlad() {
 
 // Initializes various OpenGL settings
 void initOpenGLSettings() {
+	// Enable z-buffer based depth testing
 	glEnable(GL_DEPTH_TEST);
+	// Enable face culling
+	glEnable(GL_CULL_FACE);
 	glViewport(0, 0, 800, 600);
 	glClearColor(0, 0, 0, 0);
 }
@@ -100,6 +86,7 @@ int main(int argc, char* argv[]) {
 	// Main render loop
 	while (!glfwWindowShouldClose(mainWindow.getWindowptr())) {
 		mainWindow.render();
+		mainWindow.processKeyInput();
 	}
 
 	Window::cleanUpScene();

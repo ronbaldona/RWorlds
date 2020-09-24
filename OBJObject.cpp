@@ -15,7 +15,7 @@ OBJObject::~OBJObject() {
 
 }
 
-OBJObject::OBJObject(const char* path) {
+OBJObject::OBJObject(const char* path) : Object() {
 	model = glm::mat4(1.0f);
 	// Load OBJ file info
 	load(path);
@@ -246,6 +246,7 @@ void OBJObject::reset() {
 
 void OBJObject::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 	shaderProg.use();
+	setShaderToRenderType(shaderProg);
 	shaderProg.setMat4("model", model);
 	shaderProg.setMat4("view", view);
 	shaderProg.setMat4("projection", projection);

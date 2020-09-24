@@ -1,11 +1,13 @@
 #include "Model.h"
+#include "PrintDebug.h"
 
-Model::Model(const char* path) {
+Model::Model(const char* path) : Object() {
 	model = glm::mat4(1.0f);
 	if (!load(path)) {
 		std::cout << "Exiting program...\n";
 		exit(EXIT_FAILURE);
 	}
+	centerToOrigin();
 }
 
 Model::~Model() {
@@ -17,8 +19,9 @@ Model::~Model() {
 }
 
 void Model::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
+	shaderProg.use();
+	setShaderToRenderType(shaderProg);
 	for (auto mesh : meshes) {
-		//mesh.draw(shaderProg, view, projection);
 		mesh.draw(shaderProg, model, view, projection);
 	}
 }
@@ -164,4 +167,38 @@ void Model::scale(glm::vec3 scaleVec) {
 
 void Model::reset() {
 	model = glm::mat4(1.0f);
+}
+
+void Model::centerToOrigin() {
+	std::vector<glm::vec3> minDimVec;
+	std::vector<glm::vec3> maxDimVec;
+	glm::vec3 min(std::numeric_limits<float>::max());
+	glm::vec3 max(std::numeric_limits<float>::lowest());
+	
+	// Find minimum and maximum position values of the model
+	for (auto const& mesh : meshes) {
+		glm::vec3 minHolder, maxHolder;
+		mesh.getCornerVecs(minHolder, maxHolder);
+		minDimVec.push_back(minHolder);
+		maxDimVec.push_back(maxHolder);
+	}
+	for (int i = 0; i < minDimVec.size(); ++i) {
+		for (int j = 0; j < 3; ++j) {
+			min[j] = (min[j] > minDimVec[i][j]) ? minDimVec[i][j] : min[j];
+			max[j] = (max[j] < maxDimVec[i][j]) ? maxDimVec[i][j] : max[j];
+		}
+	}
+
+	// Translate each point in the mesh to the center
+	glm::vec3 translate(
+		0.5f * (max.x + min.x),
+		0.5f * (max.y + min.y),
+		0.5f * (max.z + min.z)
+	);
+	for (auto& mesh : meshes) {
+		for (auto& vertex : mesh.vertices) {
+			vertex.position -= translate;
+		}
+		mesh.updateBuffers();
+	}
 }

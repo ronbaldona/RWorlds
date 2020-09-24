@@ -155,10 +155,13 @@
   <ItemGroup>
     <ClCompile Include="C:\OpenGL\include\glad.c" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DirLight.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="OBJObject.cpp" />
+    <ClCompile Include="SPointLight.cpp" />
     <ClCompile Include="PrintDebug.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
@@ -167,10 +170,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DirLight.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OBJObject.h" />
+    <ClInclude Include="SPointLight.h" />
     <ClInclude Include="PrintDebug.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />

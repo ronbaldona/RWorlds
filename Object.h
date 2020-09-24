@@ -1,5 +1,6 @@
 /*
     Base class for all drawable objects. Serves as the interface for rendering any object
+	May rewrite
 	
 	- RAB
  */
@@ -9,10 +10,19 @@
 
 #include "Shader.h"
 
+enum class renderType
+{
+	NORMAL,
+	TEXTURE_WRAP
+};
+
 class Object {
 protected:
 	// Places object in world space
 	glm::mat4 model = glm::mat4(1.0f);
+	
+	// Mode for object to be rendered in 
+	renderType renderMode = renderType::NORMAL;
 
 	/// <summary>
 	/// Loads object from given file
@@ -22,7 +32,16 @@ protected:
 	virtual bool load(const char* path) = 0;
 
 public:
-
+	/// <summary>
+	/// Base constructor that sets rendering mode to normal coloring
+	/// </summary>
+	Object() { renderMode = renderType::NORMAL; }
+	/// <summary>
+	/// Base constructor that sets rendering mode to parameter
+	/// </summary>
+	/// <param name="_renderMode"> type of rendering mode to set </param>
+	Object(renderType _renderMode) : renderMode(_renderMode) {}
+	
 	/// <summary>
 	/// Draws object to screen.
 	/// </summary>
@@ -68,4 +87,32 @@ public:
 	/// Resets object's transformations
 	/// </summary>
 	virtual void reset() = 0;
+
+	/// <summary>
+	/// Gets the rendering mode for the given 3D object
+	/// </summary>
+	/// <returns> enum that describes what render mode object is </returns>
+	renderType getRenderMode() const { return renderMode; }
+	/// <summary>
+	/// Sets rendering mode for given 3D object
+	/// </summary>
+	/// <param name="renderMode"> Sets the given rendering mode to parameter </param>
+	void setRenderMode(renderType renderMode) { this->renderMode = renderMode; }
+	/// <summary>
+	/// Sets render mode in shader program
+	/// </summary>
+	/// <param name="program"> program to set render mode in </param>
+	void setShaderToRenderType(const Shader& program) const {
+		switch (renderMode) {
+		case renderType::NORMAL:
+			program.setInt("colorMode", 0);
+			break;
+		case renderType::TEXTURE_WRAP:
+			program.setInt("colorMode", 1);
+			break;
+		default:
+			std::cout << "Render mode is unrecognized!\n";
+			break;
+		}
+	}
 };

@@ -2,6 +2,7 @@
 #include "Shader.h"
 
 #include "OBJObject.h"
+#include "Ground.h"
 
 namespace {
 	// TODO: CLEAN UP BY ADDING SIMPLE FILE LOADING SYSTEM
@@ -9,6 +10,7 @@ namespace {
 	// test objects
 	Object* testObj;
 	Skybox* skybox;
+	Ground* ground;
 
 	Shader* skyboxShader;
 	Shader* testShader;
@@ -31,6 +33,9 @@ namespace {
 	enum CAMERA_MODES{ OBJECT_MODE, FPS_MODE };
 	int CURR_CAM_MODE = OBJECT_MODE;
 	int NUM_CAM_MODES = 2;
+
+	// Frames per second tracking
+	double deltaTime = 0.0f;
 }
 
 /// <summary>
@@ -141,10 +146,9 @@ void Window::setObjToView(const std::string& path) {
 
 void Window::initializeScene() {
 	// Initialize objects
-	//testObj = new OBJObject(objPath.c_str());
 	testObj = new Model(objPath.c_str());
-
 	skybox = new Skybox();
+	ground = new Ground();
 
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
@@ -154,8 +158,8 @@ void Window::initializeScene() {
 void Window::cleanUpScene() {
 	// Clean up models
 	delete testObj;
-
 	delete skybox;
+	delete ground;
 
 	// Clean up shaders
 	testShader->deleteShader();
@@ -204,6 +208,12 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			else
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		
+			break;
+
+		case GLFW_KEY_P:
+			std::cout << "FPS: " << 1.0f / deltaTime << std::endl;
+			break;
 
 		}
 
@@ -234,7 +244,7 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 void Window::cursor_position_callback(GLFWwindow* window, double xpos, 
 	double ypos) {
 	// Get new pos in new basis
-	if (lmbPressed) {
+	if (lmbPressed && CURR_CAM_MODE == OBJECT_MODE) {
 		// Project both new and old positions to unit sphere
 		glm::vec3 newPosVec = projectCursorOntoSphere(xpos, ypos);
 
@@ -257,28 +267,27 @@ void Window::cursor_position_callback(GLFWwindow* window, double xpos,
 		lastCursorPos = glm::vec2((float)xpos, (float)ypos);
 	}
 
-
-
-	//std::cout << "Cursor position: " << xpos << " " << ypos << std::endl;
 }
 
 void Window::mouse_button_callback(GLFWwindow* window, int button, int action,
 	int mods) {
 	//TODO
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
-		if (action == GLFW_PRESS) {
-			// Set cursor and motion modes
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		if (CURR_CAM_MODE == OBJECT_MODE) {
+			if (action == GLFW_PRESS) {
+				// Set cursor and motion modes
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-			// Get cursor position and unit sphere projection on button press
-			lmbPressed = true;
-			glfwGetCursorPos(window, oldPos, &oldPos[1]);
-			oldPosVec = projectCursorOntoSphere(oldPos[0], oldPos[1]);
+				// Get cursor position and unit sphere projection on button press
+				lmbPressed = true;
+				glfwGetCursorPos(window, oldPos, &oldPos[1]);
+				oldPosVec = projectCursorOntoSphere(oldPos[0], oldPos[1]);
 
-		}
-		else if (action == GLFW_RELEASE) {
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			lmbPressed = false;
+			}
+			else if (action == GLFW_RELEASE) {
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+				lmbPressed = false;
+			}
 		}
 	}
 
@@ -287,6 +296,33 @@ void Window::mouse_button_callback(GLFWwindow* window, int button, int action,
 void Window::scroll_callback(GLFWwindow* window, double xoffset,
 	double yoffset) {
 	testObj->translate(glm::vec3(0, 0, -yoffset));
+}
+
+void Window::processKeyInput() const {
+	if (CURR_CAM_MODE == FPS_MODE) {
+		float camSpeed = (float)deltaTime * 10;
+		if (glfwGetKey(windowptr, GLFW_KEY_W) == GLFW_PRESS) {
+			glm::vec3 dir = glm::normalize(mainCam.getCenter() - mainCam.getEye());
+			mainCam.moveCam(dir * camSpeed);
+			view = mainCam.getViewMat();
+		}
+		if (glfwGetKey(windowptr, GLFW_KEY_A) == GLFW_PRESS) {
+			glm::vec3 dir = glm::normalize(mainCam.getCenter() - mainCam.getEye());
+			mainCam.moveCam(-glm::normalize(glm::cross(dir, mainCam.getUp())) * camSpeed);
+			view = mainCam.getViewMat();
+		}
+		if (glfwGetKey(windowptr, GLFW_KEY_S) == GLFW_PRESS) {
+			glm::vec3 dir = glm::normalize(mainCam.getCenter() - mainCam.getEye());
+			mainCam.moveCam(-dir * camSpeed);
+			view = mainCam.getViewMat();
+		}
+		if (glfwGetKey(windowptr, GLFW_KEY_D) == GLFW_PRESS) {
+			glm::vec3 dir = glm::normalize(mainCam.getCenter() - mainCam.getEye());
+			mainCam.moveCam(glm::normalize(glm::cross(dir, mainCam.getUp())) * camSpeed);
+			view = mainCam.getViewMat();
+		}
+	}
+
 }
 
 void Window::initGLFWcallbacks() {
@@ -299,12 +335,17 @@ void Window::initGLFWcallbacks() {
 }
 
 void Window::render() {
+	double currTime = glfwGetTime();
+
 	// Clear color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	testObj->draw(*testShader, view, projection);
+	ground->draw(*testShader, view, projection);
 	skybox->draw(*skyboxShader, view, projection);
 
 	// Check for events and swap buffers
 	glfwSwapBuffers(windowptr);
 	glfwPollEvents(); // LOOK THIS UP LATER
+
+	deltaTime = glfwGetTime() - currTime;
 }

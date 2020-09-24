@@ -60,6 +60,18 @@ public:
         std::vector<Texture> textures);
 
     /// <summary>
+    /// Gets AABB corner positions of mesh
+    /// </summary>
+    /// <param name="minCorner"> Stores min corner </param>
+    /// <param name="maxCorner"> Stores max corner </param>
+    void getCornerVecs(glm::vec3& minCorner, glm::vec3& maxCorner) const;
+
+    /// <summary>
+    /// Updates VBO with vertex data currently stored by model
+    /// </summary>
+    void updateBuffers() const;
+
+    /// <summary>
     /// DEPRECATED. Draws mesh to screen
     /// </summary>
     /// <param name="shaderProg"> Shader program </param>

@@ -1,4 +1,5 @@
-/*  Pinhole camera implementation that may be expanded to other types
+/*  Pinhole camera implementation that may be expanded to other types after
+ *  refactorization update
     - RAB
  */
 #pragma once
@@ -102,7 +103,12 @@ public:
 		                      glm::vec3 center,
 		                      glm::vec3 up);
 
-	
+	/// <summary>
+	/// Translates the camera
+	/// </summary>
+	/// <param name="translate"> translation vector </param>
+	void moveCam(glm::vec3 translate);
+
 
 	/// <summary>
 	/// Rotates camera based on mouse cursor movement

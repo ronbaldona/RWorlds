@@ -1,5 +1,5 @@
-/*  Implementation of a basic skybox f
-
+/*  Implementation of a basic static skybox
+    - RAB
  */
 
 #pragma once

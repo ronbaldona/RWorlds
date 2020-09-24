@@ -25,6 +25,15 @@
     <Filter Include="Source Files\Debug">
       <UniqueIdentifier>{c462fb00-e5a6-4a33-9bd2-a58789a52c96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Debug">
+      <UniqueIdentifier>{dc55b311-bab5-45d3-b2f8-66b41ae70c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Special Objects">
+      <UniqueIdentifier>{474c431d-1833-4a39-868d-27d962c14862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Special Objects">
+      <UniqueIdentifier>{79a0289d-0f45-4e0a-888f-9eee421b42fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,11 +63,20 @@
     <ClCompile Include="stb_img_imp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PrintDebug.cpp">
       <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\Special Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files\Special Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SPointLight.cpp">
+      <Filter>Source Files\Special Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="DirLight.cpp">
+      <Filter>Source Files\Special Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,11 +104,26 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Skybox.h">
+    <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrintDebug.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files\Special Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header Files\Special Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SPointLight.h">
+      <Filter>Header Files\Special Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Special Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="DirLight.h">
+      <Filter>Header Files\Special Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

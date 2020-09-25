@@ -1,5 +1,6 @@
 /* 
-     Simple class for rendering ground. Planned to be deleted and replaced later
+     Simple class for rendering ground. Planned to be deleted and replaced later.
+	 DEPRECATED
      - RAB
  */
 #pragma once
@@ -76,6 +77,11 @@ public:
 	/// </summary>
 	void reset();
 
-
+	/// <summary>
+    /// Should send material info to shader...but since ground is deprecated
+    /// I won't bother. 
+    /// </summary>
+    /// <param name="program"></param>
+	void sendMatToShader(const Shader& program) const {}
 };
 

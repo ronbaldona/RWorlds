@@ -202,3 +202,8 @@ void Model::centerToOrigin() {
 		mesh.updateBuffers();
 	}
 }
+
+void Model::sendMatToShader(const Shader& program) const {
+	for (const auto& mesh : meshes)
+		mesh.sendMatToShader(program);
+}

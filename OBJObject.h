@@ -1,5 +1,7 @@
 /*
-    Simple test class for loading OBJ files. DEPRECATED
+    Simple test class for loading OBJ files. DEPRECATED.
+	If a self-written class is what I want, I would write it in a more
+	generalized format
 	- RAB
  */
 #pragma once
@@ -74,6 +76,13 @@ public:
 	/// Resets object's transformations
 	/// </summary>
 	void reset();
+
+	/// <summary>
+	/// Should send material info to shader...but since OBJObject is deprecated
+	/// I won't bother. 
+	/// </summary>
+	/// <param name="program"></param>
+	void sendMatToShader(const Shader& program) const {}
 
     /// <summary>
 	/// Draws object to screen.

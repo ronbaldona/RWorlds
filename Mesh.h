@@ -31,6 +31,14 @@ struct Texture {
 };
 
 /// <summary>
+/// Holds basic material that is constant throughout entire mesh
+/// </summary>
+struct Material {
+    glm::vec3 ambient, diffuse, specular;
+    float shininess;
+};
+
+/// <summary>
 /// Stores mesh information for a model
 /// </summary>
 class Mesh
@@ -38,6 +46,8 @@ class Mesh
     friend class Model;
     // Data rendering
     unsigned int VAO, VBO, EBO;
+    // Material
+    Material mat;
 
     /// <summary>
     /// Initializes buffer objects for rendering
@@ -70,6 +80,12 @@ public:
     /// Updates VBO with vertex data currently stored by model
     /// </summary>
     void updateBuffers() const;
+
+    /// <summary>
+    /// Sends mesh's material info to given shader program
+    /// </summary>
+    /// <param name="program"> Program to send material info to </param>
+    void sendMatToShader(const Shader& program) const;
 
     /// <summary>
     /// DEPRECATED. Draws mesh to screen

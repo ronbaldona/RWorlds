@@ -3,6 +3,8 @@
 
 #include "OBJObject.h"
 #include "Ground.h"
+#include "DirLight.h"
+#include "SPointLight.h"
 
 namespace {
 	// TODO: CLEAN UP BY ADDING SIMPLE FILE LOADING SYSTEM
@@ -11,6 +13,8 @@ namespace {
 	Object* testObj;
 	Skybox* skybox;
 	Ground* ground;
+	DirLight* testDLight;
+	SPointLight* testPLight;
 
 	Shader* skyboxShader;
 	Shader* testShader;
@@ -149,6 +153,8 @@ void Window::initializeScene() {
 	testObj = new Model(objPath.c_str());
 	skybox = new Skybox();
 	ground = new Ground();
+	testDLight = new DirLight();
+	testPLight = new SPointLight();
 
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
@@ -160,6 +166,8 @@ void Window::cleanUpScene() {
 	delete testObj;
 	delete skybox;
 	delete ground;
+	delete testDLight;
+	delete testPLight;
 
 	// Clean up shaders
 	testShader->deleteShader();

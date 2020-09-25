@@ -16,5 +16,12 @@ SPointLight::SPointLight() : position(STANDARD_POS),
                              cutoff(STANDARD_CUTOFF) {}
 
 void SPointLight::dataToShader(const Shader& program) {
-    //TODO
+    // TODO
+    // I KNOW, I KNOW, HARDCODED. I'LL REFACTOR THE CODE LATER ANYWAY. SUE ME
+    program.setInt("numSPointLights", 1);
+
+    program.setVec3("sPLight.position", position);
+    program.setVec3("sPLight.color", color);
+    program.setVec3("sPLight.attenuation", attenuation);
+    program.setFloat("sPLight.cutoff", cutoff);
 }

@@ -107,4 +107,10 @@ public:
 	/// Centers object to origin
 	/// </summary>
 	void centerToOrigin();
+
+	/// <summary>
+    /// Sends material info to the passed-in shader
+    /// </summary>
+    /// <param name="program"></param>
+	void sendMatToShader(const Shader& program) const;
 };

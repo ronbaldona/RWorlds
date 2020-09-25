@@ -71,6 +71,13 @@ void Mesh::updateBuffers() const {
     );
 }
 
+void Mesh::sendMatToShader(const Shader& program) const {
+    program.setVec3("material.ambient", mat.ambient);
+    program.setVec3("material.diffuse", mat.diffuse);
+    program.setVec3("material.specular", mat.specular);
+    program.setFloat("material.shininess", mat.shininess);
+}
+
 void Mesh::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
     // TODO: DEAL WITH TEXTURES LATER
     /*

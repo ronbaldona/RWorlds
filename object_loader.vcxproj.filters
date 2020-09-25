@@ -48,9 +48,6 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OBJObject.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
     </ClCompile>
@@ -78,6 +75,9 @@
     <ClCompile Include="DirLight.cpp">
       <Filter>Source Files\Special Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -88,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Header Files\Drawable Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OBJObject.h">
       <Filter>Header Files\Drawable Objects</Filter>
@@ -124,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="DirLight.h">
       <Filter>Header Files\Special Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

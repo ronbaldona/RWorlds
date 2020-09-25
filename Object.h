@@ -1,6 +1,6 @@
 /*
     Base class for all drawable objects. Serves as the interface for rendering any object
-	May rewrite
+	Will rewrite
 	
 	- RAB
  */
@@ -13,7 +13,8 @@
 enum class renderType
 {
 	NORMAL,
-	TEXTURE_WRAP
+	TEXTURE_WRAP,
+	PHONG
 };
 
 class Object {
@@ -110,9 +111,19 @@ public:
 		case renderType::TEXTURE_WRAP:
 			program.setInt("colorMode", 1);
 			break;
+		case renderType::PHONG:
+			program.setInt("colorMode", 2);
+			break;
 		default:
 			std::cout << "Render mode is unrecognized!\n";
 			break;
 		}
 	}
+
+	/// <summary>
+	/// Sends material value to shader of interest
+	/// </summary>
+	/// <param name="program"> Shader program to send vals to </param>
+	virtual void sendMatToShader(const Shader& program) const = 0;
+
 };

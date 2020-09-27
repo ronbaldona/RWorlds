@@ -1,10 +1,24 @@
 #include "Mesh.h"
 
+namespace {
+    using namespace glm;
+    const vec3 STANDARD_MAT_AMBIENT(0.1f, 0.3f, 0.1f);
+    const vec3 STANDARD_MAT_DIFFUSE(0.2f, 0.5f, 0.6f);
+    const vec3 STANDARD_MAT_SPECULAR(0.1f, 0.7f, 0.2f);
+    const float STANDARD_MAT_SHININESS = 50.0f;
+}
+
+
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
     std::vector<Texture> textures) {
     this->vertices = vertices;
     this->indices = indices;
     this->textures = textures;
+
+    mat.ambient = STANDARD_MAT_AMBIENT;
+    mat.diffuse = STANDARD_MAT_DIFFUSE;
+    mat.specular = STANDARD_MAT_SPECULAR;
+    mat.shininess = STANDARD_MAT_SHININESS;
 
     init();
 }
@@ -79,9 +93,7 @@ void Mesh::sendMatToShader(const Shader& program) const {
 }
 
 void Mesh::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
-    // TODO: DEAL WITH TEXTURES LATER
-    /*
-    */
+    //DEPRECATED
     // TODO Change this later
     shaderProg.use();
     shaderProg.setMat4("model", glm::mat4(1.0f));
@@ -96,8 +108,7 @@ void Mesh::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 
 void Mesh::draw(Shader shaderProg, glm::mat4& model, glm::mat4& view, 
     glm::mat4& projection) {
-
-    // TODO Change this later
+    // Improve on this later
     shaderProg.setMat4("model", model);
     shaderProg.setMat4("view", view);
     shaderProg.setMat4("projection", projection);

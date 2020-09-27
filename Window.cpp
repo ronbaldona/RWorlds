@@ -15,6 +15,7 @@ namespace {
 	Ground* ground;
 	DirLight* testDLight;
 	SPointLight* testPLight;
+	Light* currLight;
 
 	Shader* skyboxShader;
 	Shader* testShader;
@@ -153,15 +154,21 @@ void Window::initializeScene() {
 	testObj = new Model(objPath.c_str());
 	skybox = new Skybox();
 	ground = new Ground();
-	testDLight = new DirLight();
+
+    testDLight = new DirLight();
 	testPLight = new SPointLight();
 
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
 	skyboxShader = new Shader("Shaders/Skybox.vert", "Shaders/Skybox.frag");
+
+	// Hacky, but just for testing purposes
+	testDLight->dataToShader(*testShader);
+	testPLight->dataToShader(*testShader);
 }
 
 void Window::cleanUpScene() {
+	std::cout << "Deleting scene objects\n";
 	// Clean up models
 	delete testObj;
 	delete skybox;
@@ -174,6 +181,7 @@ void Window::cleanUpScene() {
 	delete testShader;
 	skyboxShader->deleteShader();
 	delete skyboxShader;
+
 }
 
 void Window::framebuffer_size_callback(GLFWwindow* window, int width, 
@@ -218,11 +226,22 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		
 			break;
-
 		case GLFW_KEY_P:
+			// just some debug info
 			std::cout << "FPS: " << 1.0f / deltaTime << std::endl;
+			errorHandler::printGlError();
+			std::cout << std::endl;
 			break;
-
+		
+		// Camera light options
+		case GLFW_KEY_F1:
+			// DIRECTIONAL LIGHT
+			currLight = testDLight;
+			break;
+		case GLFW_KEY_F2:
+			// POINT LIGHT
+			currLight = testPLight;
+			break;
 		}
 
 		// lower case
@@ -344,11 +363,20 @@ void Window::initGLFWcallbacks() {
 
 void Window::render() {
 	double currTime = glfwGetTime();
-
 	// Clear color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Set up lights here for now...HACKY
+	testShader->use();
+	testDLight->dataToShader(*testShader);
+	testShader->setInt("numDirLights", 1);
+	testPLight->dataToShader(*testShader);
+	testShader->setInt("numSPointLights", 1);
+
 	testObj->draw(*testShader, view, projection);
 	ground->draw(*testShader, view, projection);
+
+	// Skybox gets used last
 	skybox->draw(*skyboxShader, view, projection);
 
 	// Check for events and swap buffers

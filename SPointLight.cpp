@@ -5,8 +5,8 @@ namespace {
 }
 
 const float SPointLight::MAX_CUTOFF_ANGLE = 180.0f;
-const vec3 SPointLight::STANDARD_POS(-3.0f, 0, 3.0f);
-const vec3 SPointLight::STANDARD_COL(0.6f, 0.2f, 0.2f);
+const vec3 SPointLight::STANDARD_POS(-1.0f, 0, 2.0f);
+const vec3 SPointLight::STANDARD_COL(0.4);
 const vec3 SPointLight::STANDARD_ATTEN(1.0f, 0, 0);
 const float SPointLight::STANDARD_CUTOFF = 180.0f;
 

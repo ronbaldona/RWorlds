@@ -72,6 +72,7 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	if (!success) {
 		glGetShaderInfoLog(fragShader, BUFSIZ, nullptr, infoLog);
 		std::cout << "Fragment shader compilation failed!\n";
+		std::cout << infoLog << std::endl;
 	}
 
 	std::cout << "Compiling and linking shaders to full program\n";
@@ -86,6 +87,7 @@ Shader::Shader(const char* vertPath, const char* fragPath) {
 	if (!success) {
 		glGetProgramInfoLog(ID, BUFSIZ, nullptr, infoLog);
 		std::cout << "Shader linking program failed\n";
+		std::cout << infoLog << std::endl;
 	}
 	glValidateProgram(ID);
 
@@ -149,6 +151,7 @@ void Shader::printShaderProgramInfoLong() const {
 	if (!info) {
 		std::cout << "- Has failed program validation\n";
 		glGetProgramInfoLog(ID, BUFSIZ, nullptr, infoLog);
+		std::cout << infoLog << std::endl;
 	}
 
 	// Is shader flagged for deletion

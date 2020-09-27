@@ -42,6 +42,8 @@ public:
 	/// </summary>
 	/// <param name="_renderMode"> type of rendering mode to set </param>
 	Object(renderType _renderMode) : renderMode(_renderMode) {}
+
+	virtual ~Object() {}
 	
 	/// <summary>
 	/// Draws object to screen.

@@ -1,7 +1,7 @@
 #include "Model.h"
 #include "PrintDebug.h"
 
-Model::Model(const char* path) : Object() {
+Model::Model(const char* path) : Object(renderType::PHONG) {
 	model = glm::mat4(1.0f);
 	if (!load(path)) {
 		std::cout << "Exiting program...\n";
@@ -11,7 +11,7 @@ Model::Model(const char* path) : Object() {
 }
 
 Model::~Model() {
-	for (auto mesh : meshes) {
+	for (auto& mesh : meshes) {
 		glDeleteBuffers(1, &mesh.VBO);
 		glDeleteBuffers(1, &mesh.EBO);
 		glDeleteVertexArrays(1, &mesh.VAO);
@@ -21,14 +21,16 @@ Model::~Model() {
 void Model::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 	shaderProg.use();
 	setShaderToRenderType(shaderProg);
-	for (auto mesh : meshes) {
+	glm::mat4 invTransposeModelview = glm::inverse(glm::transpose(view * model));
+	shaderProg.setMat4("invTransModelview", invTransposeModelview);
+	for (auto& mesh : meshes) {
+		mesh.sendMatToShader(shaderProg);
 		mesh.draw(shaderProg, model, view, projection);
 	}
 }
 
 bool Model::load(const char* path) {
 	Assimp::Importer import;
-	// TODO: Add more flags later?
 	const aiScene* scene = import.ReadFile(path, aiProcess_FlipUVs | aiProcess_Triangulate);
 
 	// Check if loading has failed (incomplete, no root node to load)
@@ -43,6 +45,8 @@ bool Model::load(const char* path) {
 
 	// Recursively move through scene graph
 	processNode(scene->mRootNode, scene);
+
+	return true;
 }
 
 void Model::processNode(aiNode* node, const aiScene* scene) {

@@ -1,5 +1,13 @@
 #include "main.h"
 
+#define DEBUG_MODE
+#ifdef DEBUG_MODE
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#endif
+
 inline std::string printUsageStatement() {
 	std::string usage = "===========\nUSAGE\n===========\n";
 	usage += "\t [-h] [-w width height] obj\n";
@@ -30,6 +38,11 @@ void initOpenGLSettings() {
 }
 
 int main(int argc, char* argv[]) {
+#ifdef DEBUG_MODE
+	std::cout << "MEMORY DEBUG MODE IS ON\n\n";
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
 	std::string objToLoad = TEST_OBJ;
 	int width = STND_WIDTH;
 	int height = STND_HEIGHT;

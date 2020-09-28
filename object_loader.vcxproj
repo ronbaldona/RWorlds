@@ -161,6 +161,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="OBJObject.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SPointLight.cpp" />
     <ClCompile Include="PrintDebug.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OBJObject.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SPointLight.h" />
     <ClInclude Include="PrintDebug.h" />
     <ClInclude Include="Shader.h" />

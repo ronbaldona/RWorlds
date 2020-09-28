@@ -1,6 +1,8 @@
 #include "Camera.h"
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+
 #include "PrintDebug.h"
 
 // Standard camera settings

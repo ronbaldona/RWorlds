@@ -4,6 +4,8 @@
  */
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include "Light.h"
 
 class DirLight : public Light {

@@ -1,4 +1,7 @@
 #include "Model.h"
+
+#include <glad/glad.h>
+
 #include "PrintDebug.h"
 
 Model::Model(const char* path) : Object(renderType::PHONG) {
@@ -18,20 +21,21 @@ Model::~Model() {
 	}
 }
 
-void Model::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
-	shaderProg.use();
-	setShaderToRenderType(shaderProg);
+void Model::draw(const Shader& program, glm::mat4 view, glm::mat4 projection) {
+	program.use();
+	setShaderToRenderType(program);
 	glm::mat4 invTransposeModelview = glm::inverse(glm::transpose(view * model));
-	shaderProg.setMat4("invTransModelview", invTransposeModelview);
+	program.setMat4("invTransModelview", invTransposeModelview);
 	for (auto& mesh : meshes) {
-		mesh.sendMatToShader(shaderProg);
-		mesh.draw(shaderProg, model, view, projection);
+		mesh.sendMatToShader(program);
+		mesh.draw(program, model, view, projection);
 	}
 }
 
 bool Model::load(const char* path) {
 	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_FlipUVs | aiProcess_Triangulate);
+	const aiScene* scene = import.ReadFile(path, aiProcess_FlipUVs | 
+		                                         aiProcess_Triangulate);
 
 	// Check if loading has failed (incomplete, no root node to load)
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||

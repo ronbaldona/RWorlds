@@ -4,9 +4,8 @@
 
 #pragma once
 
-#include <filesystem>
+#include <glad/glad.h>
 
-#include "stb_image.h"
 #include "Shader.h"
 
 class Skybox
@@ -62,10 +61,10 @@ public:
 	/// <summary>
     /// Draw skybox to screen.
     /// </summary>
-    /// <param name="shaderProg"> Shader program </param>
+    /// <param name="program"> Shader program </param>
     /// <param name="view"> view matrix </param>
     /// <param name="projection"> projection matrix </param>
-	void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection);
+	void draw(const Shader& program, glm::mat4 view, glm::mat4 projection);
 
 };
 

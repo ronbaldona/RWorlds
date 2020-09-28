@@ -1,6 +1,14 @@
 #include "Window.h"
-#include "Shader.h"
 
+#include <iostream>
+
+#include "PrintDebug.h"
+
+#include "Object.h"
+#include "Model.h"
+#include "Camera.h"
+#include "Skybox.h"
+#include "Shader.h"
 #include "OBJObject.h"
 #include "Ground.h"
 #include "DirLight.h"

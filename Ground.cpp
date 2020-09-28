@@ -1,4 +1,6 @@
 #include "Ground.h"
+
+#include <iostream>
 #include "stb_image.h"
 
 const Vertex Ground::vertices[4] = {
@@ -115,13 +117,13 @@ void Ground::reset() {
 	model = glm::mat4(1.0f);
 }
 
-void Ground::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
-	shaderProg.use();
-	setShaderToRenderType(shaderProg);
-	shaderProg.setInt("numTiles", numTiles);
-	shaderProg.setMat4("model", model);
-	shaderProg.setMat4("view", view);
-	shaderProg.setMat4("projection", projection);
+void Ground::draw(const Shader& program, glm::mat4 view, glm::mat4 projection) {
+	program.use();
+	setShaderToRenderType(program);
+	program.setInt("numTiles", numTiles);
+	program.setMat4("model", model);
+	program.setMat4("view", view);
+	program.setMat4("projection", projection);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

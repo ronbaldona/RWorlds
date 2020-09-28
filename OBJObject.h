@@ -6,6 +6,9 @@
  */
 #pragma once
 
+#include <glad/glad.h>
+#include <vector>
+
 #include "Object.h"
 
 class OBJObject : public Object

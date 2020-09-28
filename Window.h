@@ -9,15 +9,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-
-#include "PrintDebug.h"
-
-#include "Object.h"
-#include "Model.h"
-#include "Camera.h"
-#include "Skybox.h"
-
+#include <string>
 
 class Window {
 	// Ptr to GLFW window object

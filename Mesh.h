@@ -6,8 +6,6 @@
  */
 #pragma once
 
-#include <glm/gtc/matrix_transform.hpp>
-
 #include <vector>
 
 #include "Shader.h"
@@ -88,24 +86,16 @@ public:
     void sendMatToShader(const Shader& program) const;
 
     /// <summary>
-    /// DEPRECATED. Draws mesh to screen
-    /// </summary>
-    /// <param name="shaderProg"> Shader program </param>
-    /// <param name="view"> view matrix</param>
-    /// <param name="projection"> projection matrix </param>
-    void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection);
-
-    /// <summary>
     /// Draws mesh to screen
     /// </summary>
-    /// <param name="shaderProg"> Shader program </param>
+    /// <param name="program"> Shader program </param>
     /// <param name="model"> model matrix </param>
     /// <param name="view"> view matrix </param>
     /// <param name="projection"> projection matrix </param>
-    void draw(Shader shaderProg,
-        glm::mat4& model,
-        glm::mat4& view,
-        glm::mat4& projection);
+    void draw(const Shader& program,
+              glm::mat4& model,
+              glm::mat4& view,
+              glm::mat4& projection);
 
 };
 

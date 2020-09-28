@@ -1,5 +1,9 @@
 #include "Skybox.h"
 
+#include <filesystem>
+#include <glad/glad.h>
+
+#include "stb_image.h"
 #include "PrintDebug.h"
 
 const glm::vec3 Skybox::vertices[8] = {
@@ -52,7 +56,7 @@ Skybox::~Skybox() {
 }
 
 /// <summary>
-/// 
+/// Helper function for assigning names of cube map to faces of cubemap
 /// </summary>
 /// <param name="filePathArray"></param>
 /// <param name="counterArray"></param>
@@ -197,12 +201,12 @@ void Skybox::init() {
 	glBindVertexArray(0);
 }
 
-void Skybox::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
+void Skybox::draw(const Shader& program, glm::mat4 view, glm::mat4 projection) {
 	glDepthFunc(GL_LEQUAL);
-	shaderProg.use();
+	program.use();
 	glm::mat4 newView = glm::mat4(glm::mat3(view));
-	shaderProg.setMat4("view", newView);
-	shaderProg.setMat4("projection", projection);
+	program.setMat4("view", newView);
+	program.setMat4("projection", projection);
 
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);

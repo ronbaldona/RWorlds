@@ -1,5 +1,10 @@
 #include "Shader.h"
 
+#include <glad/glad.h>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 Shader::Shader() {
 	// TODO
 	ID = 0;
@@ -136,7 +141,7 @@ void Shader::setMat4(const std::string& name, glm::mat4 value) const {
 		glm::value_ptr(value));
 }
 
-void Shader::use() {
+void Shader::use() const {
 	glUseProgram(ID);
 }
 

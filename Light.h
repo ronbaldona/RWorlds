@@ -14,6 +14,5 @@ public:
     /// </summary>
     /// <param name="program"> Shader program being passed in </param>
     virtual void dataToShader(const Shader& program) = 0;
-
 };
 

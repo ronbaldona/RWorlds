@@ -5,7 +5,11 @@
  */
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Object.h"
+
+// Struct is defined at Mesh.h (should move later)
 #include "Mesh.h"
 
 class Ground : public Object
@@ -34,10 +38,10 @@ public:
 	/// <summary>
     /// Draws object to screen.
     /// </summary>
-    /// <param name="shaderProg"> ID of shader program to use </param>
+    /// <param name="program"> ID of shader program to use </param>
     /// <param name="view"> inverse camera transformation matrix </param>
     /// <param name="projection"> projection transformation matrix </param>
-	void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection);
+	void draw(const Shader& program, glm::mat4 view, glm::mat4 projection);
 
 	/// <summary>
 	/// Translates the object

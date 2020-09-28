@@ -19,20 +19,26 @@
     <Filter Include="Source Files\Drawable Objects">
       <UniqueIdentifier>{7ee21640-a358-4088-bac4-5505dce2e9b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{5a6d47f8-188d-4ece-8aee-98d351efde94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Debug">
       <UniqueIdentifier>{c462fb00-e5a6-4a33-9bd2-a58789a52c96}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Debug">
       <UniqueIdentifier>{dc55b311-bab5-45d3-b2f8-66b41ae70c7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Special Objects">
-      <UniqueIdentifier>{474c431d-1833-4a39-868d-27d962c14862}</UniqueIdentifier>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{289c7374-cf5a-408e-bda4-172403733862}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Special Objects">
-      <UniqueIdentifier>{79a0289d-0f45-4e0a-888f-9eee421b42fa}</UniqueIdentifier>
+    <Filter Include="DEPRECATED">
+      <UniqueIdentifier>{64f5dc75-95e5-4e96-a44d-1c16f8cd065e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other Dependencies">
+      <UniqueIdentifier>{0fb88fd9-5e26-49c4-aed4-a4fa9b0519c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Light Casters">
+      <UniqueIdentifier>{a45c8750-0645-47f1-a557-7f2f6443c88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light Casters">
+      <UniqueIdentifier>{60b09e58-df61-4773-b5fc-7aca08e2eec8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,54 +48,51 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\OpenGL\include\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OBJObject.cpp">
-      <Filter>Source Files\Drawable Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
     </ClCompile>
-    <ClCompile Include="stb_img_imp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PrintDebug.cpp">
       <Filter>Source Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files\Special Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Source Files\Special Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SPointLight.cpp">
-      <Filter>Source Files\Special Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="DirLight.cpp">
-      <Filter>Source Files\Special Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJObject.cpp">
+      <Filter>DEPRECATED</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_img_imp.cpp">
+      <Filter>Other Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\OpenGL\include\glad.c">
+      <Filter>Other Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="DirLight.cpp">
+      <Filter>Source Files\Light Casters</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SPointLight.cpp">
+      <Filter>Source Files\Light Casters</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>Header Files\Drawable Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="OBJObject.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -98,46 +101,55 @@
     <ClInclude Include="Model.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrintDebug.h">
       <Filter>Header Files\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Header Files\Special Objects</Filter>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Header Files\Special Objects</Filter>
+    <ClInclude Include="OBJObject.h">
+      <Filter>DEPRECATED</Filter>
     </ClInclude>
-    <ClInclude Include="SPointLight.h">
-      <Filter>Header Files\Special Objects</Filter>
+    <ClInclude Include="stb_image.h">
+      <Filter>Other Dependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files\Special Objects</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirLight.h">
-      <Filter>Header Files\Special Objects</Filter>
+      <Filter>Header Files\Light Casters</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Light Casters</Filter>
+    </ClInclude>
+    <ClInclude Include="SPointLight.h">
+      <Filter>Header Files\Light Casters</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header Files\Drawable Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
       <Filter>Header Files\Drawable Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\test.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="Shaders\test.frag">
-      <Filter>Source Files\Shaders</Filter>
+    <None Include="Shaders\Skybox.frag">
+      <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\Skybox.vert">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\Skybox.frag">
-      <Filter>Source Files\Shaders</Filter>
+    <None Include="Shaders\test.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\test.vert">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

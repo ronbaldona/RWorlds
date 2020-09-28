@@ -6,7 +6,8 @@
  */
 #pragma once
 
-#include <vector>
+#include <glm/glm.hpp>
+#include <iostream>
 
 #include "Shader.h"
 
@@ -48,10 +49,11 @@ public:
 	/// <summary>
 	/// Draws object to screen.
 	/// </summary>
-	/// <param name="shaderProg"> ID of shader program to use </param>
+	/// <param name="program"> ID of shader program to use </param>
 	/// <param name="view"> inverse camera transformation matrix </param>
 	/// <param name="projection"> projection transformation matrix </param>
-	virtual void draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) = 0;
+	virtual void draw(const Shader& program, 
+		              glm::mat4 view, glm::mat4 projection) = 0;
 
 	/// <summary>
 	/// Translates the object

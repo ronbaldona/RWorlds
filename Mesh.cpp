@@ -1,5 +1,8 @@
 #include "Mesh.h"
 
+#include <glad/glad.h>
+#include <iostream>
+
 namespace {
     using namespace glm;
     const vec3 STANDARD_MAT_AMBIENT(0.1f, 0.3f, 0.1f);
@@ -92,26 +95,12 @@ void Mesh::sendMatToShader(const Shader& program) const {
     program.setFloat("material.shininess", mat.shininess);
 }
 
-void Mesh::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
-    //DEPRECATED
-    // TODO Change this later
-    shaderProg.use();
-    shaderProg.setMat4("model", glm::mat4(1.0f));
-    shaderProg.setMat4("view", view);
-    shaderProg.setMat4("projection", projection);
-
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, (int)indices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
-}
-
-
-void Mesh::draw(Shader shaderProg, glm::mat4& model, glm::mat4& view, 
+void Mesh::draw(const Shader& program, glm::mat4& model, glm::mat4& view, 
     glm::mat4& projection) {
     // Improve on this later
-    shaderProg.setMat4("model", model);
-    shaderProg.setMat4("view", view);
-    shaderProg.setMat4("projection", projection);
+    program.setMat4("model", model);
+    program.setMat4("view", view);
+    program.setMat4("projection", projection);
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, (int)indices.size(), GL_UNSIGNED_INT, 0);

@@ -7,7 +7,7 @@ Starter code for any of my OpenGL projects. I currently use it to prototype any 
 
 ![robot screenshot 2](Screenshots/3.PNG)
 
-![robot screenshot 3](Screenshots/4.PNG)
+![robot screenshot 3](Screenshots/4.png)
 
 
 Special thanks to Davyd Vidige for the robot

@@ -1,5 +1,5 @@
 # object_loader_OGL
-Starter code for any of my OpenGL projects.
+Starter code for any of my OpenGL projects. I currently use it to prototype any real time rendering algorithms I have quickly. Some screenshots can be found below
 
 ## Installation instructions
 This project uses Visual Studio 2019 Community Edition.

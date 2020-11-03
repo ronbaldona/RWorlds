@@ -138,45 +138,6 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat,
 	return textures;
 }
 
-void Model::translate(float x, float y, float z) {
-	translate(glm::vec3(x, y, z));
-}
-void Model::translate(glm::vec3 transVec) {
-	glm::mat4 translMat(1.0f);
-	for (int i = 0; i < 3; ++i) {
-		translMat[3][i] += transVec[i];
-	}
-	model = translMat * model;
-}
-
-void Model::rotate(float angle, glm::vec3 axis) {
-	/*
-	if (glm::length(glm::normalize(axis)) < 1.0f - 1e-4f) {
-		std::cout << "Error, axis of rotation given is invalid\n";
-		return;
-	}
-	*/
-	glm::mat3 rotMat = glm::rotate(glm::mat4(1.0f), angle, axis);
-	glm::mat3 holder = rotMat * glm::mat3(model);
-	glm::vec3 transVec = glm::vec3(model[3].x, model[3].y, model[3].z);
-
-	model = glm::mat4(holder);
-	model[3].x = transVec.x;
-	model[3].y = transVec.y;
-	model[3].z = transVec.z;
-}
-
-void Model::scale(float sx, float sy, float sz) {
-	scale(glm::vec3(sx, sy, sz));
-}
-void Model::scale(glm::vec3 scaleVec) {
-	model = glm::scale(model, scaleVec);
-}
-
-void Model::reset() {
-	model = glm::mat4(1.0f);
-}
-
 void Model::centerToOrigin() {
 	std::vector<glm::vec3> minDimVec;
 	std::vector<glm::vec3> maxDimVec;

@@ -28,5 +28,12 @@ public:
 	/// <param name="program"> shader program to send data to </param>
 	void dataToShader(const Shader& program);
 
+	/// <summary>
+	/// Gets the matrix that transforms vertices from world space to NDCs in light
+	/// space
+	/// </summary>
+	/// <returns> Light space transformation matrix to NDCs </returns>
+	glm::mat4 getLightSpaceMatrix() const;
+
 };
 

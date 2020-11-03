@@ -16,9 +16,10 @@
 
 namespace {
 	// TODO: CLEAN UP BY ADDING SIMPLE FILE LOADING SYSTEM
-	std::string objPath = "Models/bunny.obj";
+	std::string objPath = "Models/source/robot.obj";
 	// test objects
 	Object* testObj;
+	Object* testQuad;
 	Skybox* skybox;
 	Ground* ground;
 	DirLight* testDLight;
@@ -27,12 +28,15 @@ namespace {
 
 	Shader* skyboxShader;
 	Shader* testShader;
+	Shader* depthShader;
+	Shader* screenShader;
 
 	// Camera/Window variables
 	int wWidth, wHeight;
 	Camera mainCam;
 	glm::mat4 view;
 	glm::mat4 projection;
+	glm::mat4 lightSpaceTransfMat;
 
 	// Trackball mode variables
 	bool lmbPressed = false;
@@ -49,6 +53,8 @@ namespace {
 
 	// Frames per second tracking
 	double deltaTime = 0.0f;
+
+	// Framebuffer
 }
 
 /// <summary>
@@ -162,6 +168,7 @@ void Window::initializeScene() {
 	testObj = new Model(objPath.c_str());
 	skybox = new Skybox();
 	ground = new Ground();
+	testQuad = new Model("Models/quad.obj");
 
     testDLight = new DirLight();
 	testPLight = new SPointLight();
@@ -169,10 +176,18 @@ void Window::initializeScene() {
 	// Initialize shaders
 	testShader = new Shader("Shaders/test.vert", "Shaders/test.frag");
 	skyboxShader = new Shader("Shaders/Skybox.vert", "Shaders/Skybox.frag");
-
-	// Hacky, but just for testing purposes
-	testDLight->dataToShader(*testShader);
-	testPLight->dataToShader(*testShader);
+	depthShader = new Shader("Shaders/DepthShader.vert", 
+		                     "Shaders/DepthShader.frag");
+	screenShader = new Shader("Shaders/ScreenQuad.vert",
+		                      "Shaders/ScreenQuad.frag");
+	
+	// Basic light space tester
+	glm::mat4 lightProjMat = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 
+		                                0.5f, 50.0f);
+	glm::mat4 lightView = glm::lookAt(glm::vec3(5, 5, 0), 
+		                              glm::vec3(0),
+		                              glm::vec3(0, 1, 0));
+	lightSpaceTransfMat = lightProjMat * lightView;
 }
 
 void Window::cleanUpScene() {
@@ -181,6 +196,7 @@ void Window::cleanUpScene() {
 	delete testObj;
 	delete skybox;
 	delete ground;
+	delete testQuad;
 	delete testDLight;
 	delete testPLight;
 
@@ -189,6 +205,10 @@ void Window::cleanUpScene() {
 	delete testShader;
 	skyboxShader->deleteShader();
 	delete skyboxShader;
+	depthShader->deleteShader();
+	delete depthShader;
+	screenShader->deleteShader();
+	delete screenShader;
 
 }
 
@@ -256,7 +276,8 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 		if (mods != GLFW_MOD_SHIFT) {
 			switch (key) {
 			case GLFW_KEY_S:
-				testObj->scale(glm::vec3(0.9f));
+				if (CURR_CAM_MODE != FPS_MODE)
+				    testObj->scale(glm::vec3(0.9f));
 				break;
 			default:
 				break;
@@ -266,7 +287,8 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode,
 		else {
 			switch (key) {
 			case GLFW_KEY_S:
-				testObj->scale(glm::vec3(1.1f));
+				if (CURR_CAM_MODE != FPS_MODE)
+				    testObj->scale(glm::vec3(1.1f));
 				break;
 			default:
 				break;
@@ -371,22 +393,46 @@ void Window::initGLFWcallbacks() {
 
 void Window::render() {
 	double currTime = glfwGetTime();
+
 	// Clear color and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Render scene to depth buffer first
+	testDLight->startRenderToDepthMap();
+	depthShader->use();
+	depthShader->setMat4("lightTransform", lightSpaceTransfMat);
+	glCullFace(GL_FRONT);
+	testObj->draw(*depthShader, view, projection);
+	glCullFace(GL_BACK);
+	ground->draw(*depthShader, view, projection);
+	testDLight->endRenderToDepthMap(wWidth, wHeight);
 
 	// Set up lights here for now...HACKY
 	testShader->use();
 	testDLight->dataToShader(*testShader);
 	testShader->setInt("numDirLights", 1);
-	testPLight->dataToShader(*testShader);
-	testShader->setInt("numSPointLights", 1);
+
+	// For shadow mapping
+	testShader->setMat4("lightTransform", lightSpaceTransfMat);
+	glActiveTexture(GL_TEXTURE0);
+	testDLight->bindDepthMapTexture();
+	testShader->setInt("depthMap", 0);
+	//testPLight->dataToShader(*testShader);
+	//testShader->setInt("numSPointLights", 1);
+
+	// Render the texture to screen?
+	/*
+	glActiveTexture(GL_TEXTURE0);
+	testDLight->bindDepthMapTexture();
+	testQuad->draw(*screenShader, view, projection);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	*/
 
 	testObj->draw(*testShader, view, projection);
 	ground->draw(*testShader, view, projection);
 
 	// Skybox gets used last
 	skybox->draw(*skyboxShader, view, projection);
-
 	// Check for events and swap buffers
 	glfwSwapBuffers(windowptr);
 	glfwPollEvents(); // LOOK THIS UP LATER

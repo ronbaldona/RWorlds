@@ -98,6 +98,7 @@ int main(int argc, char* argv[]) {
 
 	// Main render loop
 	while (!glfwWindowShouldClose(mainWindow.getWindowptr())) {
+		glEnable(GL_PROGRAM_POINT_SIZE);
 		mainWindow.render();
 		mainWindow.processKeyInput();
 	}

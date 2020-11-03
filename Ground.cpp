@@ -19,7 +19,7 @@ const glm::ivec3 Ground::indices[2] = {
 };
 
 Ground::Ground() : Object(renderType::TEXTURE_WRAP) {
-	load("Models/ground_metal.jpg");
+	load("Models/wood.png");
 
 	numTiles = 50;
 
@@ -84,47 +84,17 @@ bool Ground::load(const char* path) {
 	return true;
 }
 
-void Ground::translate(float x, float y, float z) {
-	translate(glm::vec3(x, y, z));
-}
-void Ground::translate(glm::vec3 transVec) {
-	glm::mat4 translMat(1.0f);
-	for (int i = 0; i < 3; ++i) {
-		translMat[3][i] += transVec[i];
-	}
-	model = translMat * model;
-}
-
-void Ground::rotate(float angle, glm::vec3 axis) {
-	glm::mat3 rotMat = glm::rotate(glm::mat4(1.0f), angle, axis);
-	glm::mat3 holder = rotMat * glm::mat3(model);
-	glm::vec3 transVec = glm::vec3(model[3].x, model[3].y, model[3].z);
-
-	model = glm::mat4(holder);
-	model[3].x = transVec.x;
-	model[3].y = transVec.y;
-	model[3].z = transVec.z;
-}
-
-void Ground::scale(float sx, float sy, float sz) {
-	scale(glm::vec3(sx, sy, sz));
-}
-void Ground::scale(glm::vec3 scaleVec) {
-	model = glm::scale(model, scaleVec);
-}
-
-void Ground::reset() {
-	model = glm::mat4(1.0f);
-}
-
 void Ground::draw(const Shader& program, glm::mat4 view, glm::mat4 projection) {
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texID);
+	program.setInt("texImg", 1);
 	program.use();
 	setShaderToRenderType(program);
 	program.setInt("numTiles", numTiles);
 	program.setMat4("model", model);
 	program.setMat4("view", view);
 	program.setMat4("projection", projection);
-
+	program.setMat4("invTransModelview", glm::inverse(glm::transpose(view)));
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);

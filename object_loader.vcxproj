@@ -157,9 +157,11 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DirLight.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="OBJObject.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SPointLight.cpp" />
@@ -188,6 +190,10 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\DepthShader.frag" />
+    <None Include="Shaders\DepthShader.vert" />
+    <None Include="Shaders\ScreenQuad.frag" />
+    <None Include="Shaders\ScreenQuad.vert" />
     <None Include="Shaders\Skybox.frag" />
     <None Include="Shaders\Skybox.vert" />
     <None Include="Shaders\test.frag" />

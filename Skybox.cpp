@@ -39,12 +39,12 @@ const glm::ivec3 Skybox::indices[12] = {
 };
 
 Skybox::Skybox() {
-	loadCubemap("Skybox/Default");
+	load("Skybox/Default");
 	init();
 }
 
 Skybox::Skybox(const char* path) {
-	loadCubemap(path);
+	load(path);
 	init();
 }
 
@@ -84,7 +84,7 @@ void setCubemapStringArray(std::string* filePathArray,
 	filePathArray[ind] = filepath;
 }
 
-bool Skybox::loadCubemap(const char* path) {
+bool Skybox::load(const char* path) {
 	std::cout << "Loading cubemap textures from " << path << std::endl;
 
 	// Get directory name

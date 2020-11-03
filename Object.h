@@ -37,14 +37,14 @@ public:
 	/// <summary>
 	/// Base constructor that sets rendering mode to normal coloring
 	/// </summary>
-	Object() { renderMode = renderType::NORMAL; }
+	Object();
 	/// <summary>
 	/// Base constructor that sets rendering mode to parameter
 	/// </summary>
 	/// <param name="_renderMode"> type of rendering mode to set </param>
-	Object(renderType _renderMode) : renderMode(_renderMode) {}
+	Object(renderType _renderMode);
 
-	virtual ~Object() {}
+	virtual ~Object();
 	
 	/// <summary>
 	/// Draws object to screen.
@@ -61,19 +61,19 @@ public:
 	/// <param name="x"> value to translate along x-axis </param>
 	/// <param name="y"> value to translate along y-axis </param>
 	/// <param name="z"> value to translate along z-axis </param>
-	virtual void translate(float x, float y, float z) = 0;
+	virtual void translate(float x, float y, float z);
 	/// <summary>
 	/// Translates the object
 	/// </summary>
 	/// <param name="transVec"> translation vals along axis </param>
-	virtual void translate(glm::vec3 transVec) = 0;
+	virtual void translate(glm::vec3 transVec);
 	
 	/// <summary>
 	/// Rotate the object
 	/// </summary>
 	/// <param name="angle"> angle of rotation </param>
 	/// <param name="axis"> axis of rotation </param>
-	virtual void rotate(float angle, glm::vec3 axis) = 0;
+	virtual void rotate(float angle, glm::vec3 axis);
 
 	/// <summary>
 	/// Scale object
@@ -81,49 +81,33 @@ public:
 	/// <param name="sx"> scale val along x </param>
 	/// <param name="sy"> scale val along y </param>
 	/// <param name="sz"> scale val along z </param>
-	virtual void scale(float sx, float sy, float sz) = 0;
+	virtual void scale(float sx, float sy, float sz);
 	/// <summary>
 	/// Scale object
 	/// </summary>
 	/// <param name="scaleVec"> scale vals along axis </param>
-	virtual void scale(glm::vec3 scaleVec) = 0;
+	virtual void scale(glm::vec3 scaleVec);
 
 	/// <summary>
 	/// Resets object's transformations
 	/// </summary>
-	virtual void reset() = 0;
+	virtual void reset();
 
 	/// <summary>
 	/// Gets the rendering mode for the given 3D object
 	/// </summary>
 	/// <returns> enum that describes what render mode object is </returns>
-	renderType getRenderMode() const { return renderMode; }
+	inline renderType getRenderMode() const { return renderMode; }
 	/// <summary>
 	/// Sets rendering mode for given 3D object
 	/// </summary>
 	/// <param name="renderMode"> Sets the given rendering mode to parameter </param>
-	void setRenderMode(renderType renderMode) { this->renderMode = renderMode; }
+	inline void setRenderMode(renderType renderMode) { this->renderMode = renderMode; }
 	/// <summary>
 	/// Sets render mode in shader program
 	/// </summary>
 	/// <param name="program"> program to set render mode in </param>
-	void setShaderToRenderType(const Shader& program) const {
-		switch (renderMode) {
-		case renderType::NORMAL:
-			program.setInt("colorMode", 0);
-			break;
-		case renderType::TEXTURE_WRAP:
-			program.setInt("colorMode", 1);
-			break;
-		case renderType::PHONG:
-			program.setInt("colorMode", 2);
-			break;
-		default:
-			std::cout << "Render mode is unrecognized!\n";
-			break;
-		}
-	}
-
+	void setShaderToRenderType(const Shader& program) const;
 	/// <summary>
 	/// Sends material value to shader of interest
 	/// </summary>

@@ -87,6 +87,12 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Drawable Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Light Casters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -149,6 +155,18 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\test.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DepthShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DepthShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ScreenQuad.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ScreenQuad.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

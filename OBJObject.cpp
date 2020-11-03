@@ -201,48 +201,6 @@ bool OBJObject::load(const char* path) {
 
 }
 
-void OBJObject::translate(float x, float y, float z) {
-	translate(glm::vec3(x, y, z));
-}
-void OBJObject::translate(glm::vec3 transVec) {
-	glm::mat4 translMat(1.0f);
-	for (int i = 0; i < 3; ++i) {
-		translMat[3][i] += transVec[i];
-	}
-	model = translMat * model;
-}
-
-void OBJObject::rotate(float angle, glm::vec3 axis) {
-	/*
-	if (glm::length(glm::normalize(axis)) < 1.0f - 1e-4f) {
-		std::cout << "Error, axis of rotation given is invalid\n";
-		return;
-	}
-	*/
-	// TODO: Check on differences between these two later
-	//model = glm::rotate(model, angle, axis);
-	//model = glm::rotate(glm::mat4(1.0f), angle, axis) * model;
-	glm::mat3 rotMat = glm::rotate(glm::mat4(1.0f), angle, axis);
-	glm::mat3 holder = rotMat * glm::mat3(model);
-	glm::vec3 transVec = glm::vec3(model[3].x, model[3].y, model[3].z);
-	
-	model = glm::mat4(holder);
-	model[3].x = transVec.x;
-	model[3].y = transVec.y;
-	model[3].z = transVec.z;
-}
-
-void OBJObject::scale(float sx, float sy, float sz) {
-	scale(glm::vec3(sx, sy, sz));
-}
-void OBJObject::scale(glm::vec3 scaleVec) {
-	model = glm::scale(model, scaleVec);
-}
-
-void OBJObject::reset() {
-	model = glm::mat4(1.0f);
-}
-
 
 void OBJObject::draw(Shader shaderProg, glm::mat4 view, glm::mat4 projection) {
 	shaderProg.use();

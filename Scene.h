@@ -5,10 +5,12 @@
 #pragma once
 
 #include <vector>
+#include <glm/glm.hpp>
 
 #include "Object.h"
 #include "Light.h"
 #include "Camera.h"
+#include "Shader.h"
 
 class Scene
 {
@@ -31,6 +33,12 @@ public:
 	Scene(const char* path);
 	~Scene();
 
-
+	/// <summary>
+	/// Draws every drawable object
+	/// </summary>
+	/// <param name="program"></param>
+	/// <param name="view"></param>
+	/// <param name="projection"></param>
+	void draw(const Shader& program, glm::mat4 view, glm::mat4 projection);
 };
 

@@ -13,6 +13,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 invTransModelview;
+uniform mat4 lightTransform;
 
 // Render mode
 uniform int colorMode;
@@ -28,6 +29,8 @@ out vec2 tcoord;
 out vec3 normalView;
 // Position of fragment in view space
 out vec3 fragPos;
+// Position of fragment in light space NDCs
+out vec4 fragPosLightSpace;
 
 void main() {
    gl_Position = projection * view * model * vec4(vertPos, 1.0f);
@@ -37,10 +40,12 @@ void main() {
    else if (colorMode == COLOR_MODE_TEXTURE_WRAP) {
        tcoord = texCoord;
        tcoord *= numTiles;
+       normalView = normalize(vec3(invTransModelview * vec4(0, 1.0f, 0, 0)));
    }
    else if (colorMode == COLOR_MODE_PHONG) {
        normalView = normalize(vec3(invTransModelview * vec4(normal, 0)));
-       fragPos = vec3(view * model * vec4(vertPos, 1.0f));
    }
+   fragPos = vec3(view * model * vec4(vertPos, 1.0f));
+   fragPosLightSpace = lightTransform * model * vec4(vertPos, 1.0f);
 }
 

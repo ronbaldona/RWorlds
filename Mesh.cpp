@@ -5,10 +5,10 @@
 
 namespace {
     using namespace glm;
-    const vec3 STANDARD_MAT_AMBIENT(0.1f, 0.3f, 0.1f);
-    const vec3 STANDARD_MAT_DIFFUSE(0.2f, 0.5f, 0.6f);
+    const vec3 STANDARD_MAT_AMBIENT(0.05f, 0.15f, 0.03f);
+    const vec3 STANDARD_MAT_DIFFUSE(0.2f, 0.55f, 0.4f);
     const vec3 STANDARD_MAT_SPECULAR(0.1f, 0.7f, 0.2f);
-    const float STANDARD_MAT_SHININESS = 50.0f;
+    const float STANDARD_MAT_SHININESS = 100.0f;
 }
 
 

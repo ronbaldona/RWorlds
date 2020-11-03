@@ -11,7 +11,7 @@ const glm::vec3 CENTER_STD = glm::vec3(0);
 const glm::vec3 UP_STD = glm::vec3(0, 1, 0);
 const float FOVY_STD = 60;
 const float NEAR_STD = 1;
-const float FAR_STD = 1000;
+const float FAR_STD = 500;
 const float EPSILON = 1e-4f;
 const float MAX_LOOK_ANGLE = 0.5f * glm::pi<float>() - 0.01f;
 

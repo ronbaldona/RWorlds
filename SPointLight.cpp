@@ -25,3 +25,8 @@ void SPointLight::dataToShader(const Shader& program) {
     program.setVec3("sPLight.attenuation", attenuation);
     program.setFloat("sPLight.cutoff", cutoff);
 }
+
+mat4 SPointLight::getLightSpaceMatrix() const {
+    // TODO
+    return mat4(1.0f);
+}

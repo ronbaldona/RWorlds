@@ -6,9 +6,10 @@
 
 #include <glad/glad.h>
 
+#include "Object.h"
 #include "Shader.h"
 
-class Skybox
+class Skybox : public Object
 {
 	// Vertices define a length 1 cube centered at the world origin
 	static const glm::vec3 vertices[8];
@@ -28,7 +29,7 @@ class Skybox
 	/// </summary>
 	/// <param name="path"> File path name of object </param>
 	/// <returns> True if successful, Otherwise false </returns>
-	bool loadCubemap(const char* path);
+	bool load(const char* path);
 
 	/// <summary>
     /// Initializes buffer objects for rendering
@@ -57,6 +58,12 @@ public:
 	/// <param name="path"> path name of directory containing skybox textures
 	/// </param>
 	Skybox(const char* path);
+
+	/// <summary>
+	/// ONLY HERE TO CONFORM TO OBJECT CLASS
+	/// </summary>
+	/// <param name="program"></param>
+	void sendMatToShader(const Shader& program) const {}
 
 	/// <summary>
     /// Draw skybox to screen.

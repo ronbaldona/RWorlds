@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{f832bd50-b828-4c06-ab01-067102ffd2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{9c83b37f-045d-44b3-a770-ca24eb247d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geom">
+      <UniqueIdentifier>{97d48a14-c26f-464e-ab4e-bdcb8a62f3bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\OpenGL">
+      <UniqueIdentifier>{50f7371b-a920-4845-93aa-9bd175ee91c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OSUtils">
+      <UniqueIdentifier>{3628749f-3a3c-4c4d-8fbd-3161710a88b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Math\Vec.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Geom\Triangle.h">
+      <Filter>Geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Renderer\OpenGL\Shader.h">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Renderer\OpenGL\ShaderManager.h">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Renderer\OpenGL\Renderer.h">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTri.h">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Testbed.cpp" />
+    <ClCompile Include="..\src\Renderer\OpenGL\glad.c">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTri.cpp">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Renderer\OpenGL</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
